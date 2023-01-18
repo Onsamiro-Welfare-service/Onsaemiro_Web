@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+	<head>
+		<meta charset="utf-8">
+		<title>사용자 상태정보</title>
+		<link href="css/app.css" rel="stylesheet">
+		<link href="./Onsae_UserStatus_style.css" rel="stylesheet">
+	</head>
+	
+
+<body>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar"><!-- 사이드바 메뉴 -->
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="Main_page.html">
+          <span class="align-middle">온새미로 관리자 웹</span>
+        </a>
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="Main_page.html">
+              <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="pages-profile.html">
+              <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="login_page.html">
+              <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sign In</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="SignUp_page.html">
+              <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Sign Up</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="pages-blank.html">
+              <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
+            </a>
+					</li>
+
+					<li class="sidebar-header">
+						Tools & Components
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="ui-buttons.html">
+              <i class="align-middle" data-feather="square"></i> <span class="align-middle">Buttons</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="ui-forms.html">
+              <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Forms</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="ui-cards.html">
+              <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Cards</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="ui-typography.html">
+              <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Typography</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="icons-feather.html">
+              <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
+            </a>
+					</li>
+
+					<li class="sidebar-header">
+						Plugins & Addons
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="charts-chartjs.html">
+              <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="maps-google.html">
+              <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
+            </a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+          <i class="hamburger align-self-center"></i>
+        </a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown"><!-- 알림 파트-->
+							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+								<div class="position-relative">
+									<i class="align-middle" data-feather="bell"></i>
+									<span class="indicator">4</span>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+								<div class="dropdown-menu-header">
+									4 New Notifications
+								</div>
+								<div class="list-group">
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-danger" data-feather="alert-circle"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Update completed</div>
+												<div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
+												<div class="text-muted small mt-1">30m ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-warning" data-feather="bell"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Lorem ipsum</div>
+												<div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>
+												<div class="text-muted small mt-1">2h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-primary" data-feather="home"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Login from 192.186.1.8</div>
+												<div class="text-muted small mt-1">5h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-success" data-feather="user-plus"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">New connection</div>
+												<div class="text-muted small mt-1">Christina accepted your request.</div>
+												<div class="text-muted small mt-1">14h ago</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all notifications</a>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item dropdown"><!-- 메세지 파트-->
+							<a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
+								<div class="position-relative">
+									<i class="align-middle" data-feather="message-square"></i>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">
+								<div class="dropdown-menu-header">
+									<div class="position-relative">
+										4 New Messages
+									</div>
+								</div>
+								<div class="list-group">
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">Vanessa Tucker</div>
+												<div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>
+												<div class="text-muted small mt-1">15m ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="William Harris">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">William Harris</div>
+												<div class="text-muted small mt-1">Curabitur ligula sapien euismod vitae.</div>
+												<div class="text-muted small mt-1">2h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Christina Mason">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">Christina Mason</div>
+												<div class="text-muted small mt-1">Pellentesque auctor neque nec urna.</div>
+												<div class="text-muted small mt-1">4h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">Sharon Lessman</div>
+												<div class="text-muted small mt-1">Aenean tellus metus, bibendum sed, posuere ac, mattis non.</div>
+												<div class="text-muted small mt-1">5h ago</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all messages</a>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item dropdown"><!-- 프로필 파트 -->
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                <i class="align-middle" data-feather="settings"></i>
+              </a>
+
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+								<i class="align-middle me-1" data-feather="user"></i> <span class="text-dark">Charles Hall</span>
+              </a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="Main_page.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
+								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3"><strong>사용자 상태정보</strong> ㅇㅇㅇ담당</h1>
+
+					<!-- <button type='button' id="user1_btn" class="modal_btn" onclick="modal('user1_btn')"></button> -->
+					<input type="button" id="Add_NewProfile" value="프로필 추가하기" onclick="Add_Profile()">
+					<div id="Profile_Div" class="row">
+						<!-- 여기에 프로필 생길 예정 -->
+						<div id="user1" style="width: 300px; height: 270px;" onclick="onClick('사용자test')">
+							<div class="card flex-fill w-100">
+								<div class="card-header">
+									<h5 class="card-title mb-0" style="color: black; font-size:20px; ">강지훈</h5>	
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+
+										<table class="table mb-0">
+											<tbody>
+												<tr>
+													<td>정보1</td>
+													<td class="text-end">양호</td>
+												</tr>
+												<tr>
+													<td>정보2</td>
+													<td class="text-end">지체장애</td>
+												</tr>
+												<tr>
+													<td>특이사항</td>
+													<td class="text-end">밥을 잘먹음</td>
+												</tr>
+												
+										</table>
+									</div>
+								</div>
+							</div>
+								
+						</div>
+						
+						<!-- 여기에 프로필 생길 예정 -->
+					</div>
+
+				</div>
+			</main>
+
+
+		</div>
+	</div>
+	<div id="Add_Profile_bg" class="profile_black_bg" style="display: none;"></div>
+	<div id="Add_Profile_wrap" class="profile_modal_wrap" style="display: none;">
+		<!-- <div style="width: 548px; height: 200px; margin: 25px 25px 15px 25px;">
+			<div class="container">
+				<div class="image-upload" id="image-upload">
+					<div style="width: 300px; height: 150px;" >
+						<div class="image-show" id="image-show">
+							<img id="Profile_picture" src="../src/img/avatars/Default_Profile.png">
+						</div>
+					</div>
+					<form method="post" enctype="multipart/form-data">
+						<div class="button">
+							<label for="chooseFile">
+								<img id="Picture_AddBtn" src="../src/img/icons/add-file.png">
+							</label>
+						</div>
+						<input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+					</form>
+				</div>
+				
+				
+			</div>
+		</div> -->
+		<div style="width: 548px; height: 270px; margin: 25px;">
+			<table class="table mb-0">
+				<tbody>
+					<tr>
+						<td>이름</td>
+						<td class="text-end">
+							<input type="text" id='Profile_name' class="Profile_Input" placeholder="사용자 이름을 입력해주세요">
+						</td>
+					</tr>
+					<tr>
+						<td>정보1</td>
+						<td class="text-end">
+							<input type="text" id='Profile_Info1' class="Profile_Input" placeholder="사용자 정보1을 입력해주세요">
+						</td>
+					</tr>
+					<tr>
+						<td>정보2</td>
+						<td class="text-end">
+							<input type="text" id='Profile_Info2' class="Profile_Input" placeholder="사용자 정보2을 입력해주세요">
+						</td>
+					</tr>
+					<tr>
+						<td>특이사항</td>
+						<td class="text-end">
+							<input type="text" id='Profile_Info3' class="Profile_Input" placeholder="사용자 특이사항을 입력해주세요">
+						</td>
+					</tr>
+					<tr>
+						<td>생성된 사용자 ID</td>
+						<td id="Profile_UserID" class="text-end">SD1112</td>
+					</tr>	
+					
+			</table>
+		</div>
+		<div style="width: 548px; height: 70px; margin-left: 25px; margin-top: 15px;">
+			<input type="button" class="Profile_SaveBtn" value="저장하기" onclick="saveBtn()">
+			<input type="button" class="Profile_CancelBtn" value="취소하기" onclick="cancelBtn()">
+		</div>
+	</div>
+	<div id="UserStatus_modal_bg" class="black_bg" style="display: none;"></div>
+	<div id="UserStatus_modal_wrap" class="modal_wrap" style="display: none;">
+		<div class="modal_close" onclick="offClick()"><a href="#">close</a></div>
+		
+		<div id="Modal_bar">사용자1
+			<input type="date" id="Modal_bar_date" value="2022-12-25">
+		</div>
+		<div id="Modal_body">
+			<div id="Answer" class="Answer_Style"><!-- onclick="toggleBody('Answer1') -->
+			 	<div id="Answer_ToggleBar" class="Answer_ToggleBar">
+					<span id="Answer_Title" class="Answer_Title">2023-01-12 문진표 답변</span>
+					<span id="Answer_category" class="Answer_Category">안전, 건강, 생활</span>
+				</div>
+				<div id="Answer1_Body">
+					<div id="Answer_Content" class="Answer_Content">
+						<!-- 여기서부터-->
+						<div class="Survey_style" style="margin-top: 20px;">
+							<div id="Answer_DailyLifeDiv" class="Category_Icon" style="border: 2px solid red; color: red; ">안전</div>
+							<div id="Answer_Question0" class="Answer_Question">질문1.좋은아침이에요! 잠은 잘잤나요?</div>
+							<div id="Answer_Reply0" class="Answer_Reply">답변: 네. 잘잤어요!</div>
+							<div id="Answer_Question1" class="Answer_Question">질문2.왜 잠을 못잤나요?</div>
+							<div id="Answer_Reply1" class="Answer_Reply">답변: 걱정이 많아서요</div>
+							<div id="Answer_Question1" class="Answer_Question">질문3.아픈곳이 있나요?</div>
+							<div id="Answer_Reply1" class="Answer_Reply">답변: 아랫쪽 배가 많이 아파요</div>
+						</div>
+
+						<div class="Survey_style">
+							<div id="Answer_SafeDiv" class="Category_Icon" style="border: 2px solid limegreen; color:limegreen;">건강</div>
+							<div id="Answer_Question0" class="Answer_Question">질문1.좋은아침이에요! 잠은 잘잤나요?</div>
+							<div id="Answer_Reply0" class="Answer_Reply">답변: 네. 잘잤어요!</div>
+							<div id="Answer_Question1" class="Answer_Question">질문2.왜 잠을 못잤나요?</div>
+							<div id="Answer_Reply1" class="Answer_Reply">답변: 걱정이 많아서요</div>
+							<div id="Answer_Question1" class="Answer_Question">질문3.아픈곳이 있나요?</div>
+							<div id="Answer_Reply1" class="Answer_Reply">답변: 아랫쪽 배가 많이 아파요</div>
+						</div>
+						<!-- 여기까지 생성될거임 -->
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	<div>
+
+	
+	<script src="js/app.js"></script>
+	<script src="./Onsae_UserList_Setting.js"></script>
+	<script src="./Onsae_UserStatus_logic.js"></script>
+	<script src="./Onsae_UserStatus_divlogic.js"></script>
+	<script src="./Onsae_UserProfile_logic.js"></script>
+	
+
+</body>
+
+</html>

@@ -1,0 +1,264 @@
+.modal_wrap{
+    display: none;
+    width: 1000px;
+    height: 700px;
+    position: absolute;
+    top:40%;
+    left: 40%;
+    margin: -250px 0 0 -250px;
+    background:#eee;
+    z-index: 2;
+}
+.black_bg{
+    display: none;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0, 0,0, 0.5);
+    top:0;
+    left: 0;
+    z-index: 1;
+}
+.profile_modal_wrap{
+    display: none;
+    width: 600px;
+    height: 400px;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    margin: -250px 0 0 -250px;
+    background:#eee;
+    z-index: 2;
+}
+.profile_black_bg{
+    display: none;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0, 0,0, 0.5);
+    top:0;
+    left: 0;
+    z-index: 1;
+}
+.modal_close{
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    top: -30px;
+    right: 0;
+}
+.modal_close> a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background:url(https://img.icons8.com/metro/26/000000/close-window.png);
+    text-indent: -9999px;
+}
+.modal_btn {
+    border: 3px solid black;
+    background-color: transparent;
+    width: 276px;
+    height: 385px;
+    display: inline;
+}
+#Answer1_Body{
+    border: 2px solid #222e3c;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top: none;
+    width: 948px;
+    height: 560px;
+    padding-bottom: 20px;
+    position: relative;
+    top: -9px;
+}
+
+
+#Modal_bar{
+    width: 1000px;
+    height: 35px;
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+#Modal_body {
+    width: 1000px; 
+    height: 650px;
+}
+.Answer_Style {
+    width: 950px; 
+    height: 500px; 
+    margin-left: 23px; 
+    margin-top: 20px;
+}
+.Answer_ToggleBar {
+    border: 2px solid #222e3c;
+    width: 948px;
+    border-radius: 5px;
+    height: 50px;
+    padding: 5px;
+    background-color: white;
+}
+.Answer_Title {
+    float: left; 
+    font-size: 25px; 
+    font-weight: bold; 
+    color: black;
+}
+.Answer_Category {
+    float: right; 
+    color: red;
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-top: 13px;
+}
+.Answer_Content {
+    overflow-y: auto;
+    height: 560px;
+    margin-top: 6px;
+}
+.Answer_Content::-webkit-scrollbar{
+    display: none;
+}
+.Survey_style {
+    width: 900px; 
+    margin-left: 20px; 
+    padding-bottom: 15px; 
+    margin-bottom: 20px;
+}
+.Category_Icon {
+    border-radius: 10px; 
+    width: 70px; 
+    height: 40px; 
+    text-align: center; 
+    font-size: 23px; 
+    font-weight: bold;
+    margin-top: 10px;
+}
+.Answer_Question {
+    width: 900px; 
+    height: 30px;  
+    margin-top: 10px; 
+    font-size: 20px; 
+    font-weight: bold;
+}
+.Answer_Reply {
+    width: 540px; 
+    height: 20px; 
+    margin-left: 350px; 
+    font-size: 20px; 
+    font-weight: bold; 
+    text-align: right;
+}
+#Modal_bar_date {
+    margin-left: 20px;
+    background-color: transparent; 
+    border: none; 
+    font-weight: bold;
+}
+#Add_NewProfile {
+    width: 170px; 
+    height: 50px; 
+    background-color: transparent; 
+    border-radius: 5px; 
+    border: 2px solid slateblue; 
+    font-weight: bold; 
+    font-size: 18px; 
+    position: absolute; 
+    top:90px; 
+    right:40px;
+}
+#Add_NewProfile:hover{
+    background-color: slateblue;
+    color: white;
+}
+.Profile_Input {
+    width: 250px;
+    height: 30px
+}
+.Profile_SaveBtn {
+    width: 170px;
+    height: 45px;
+    border: none;
+    border-radius: 5px;
+    background-color:teal;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 11px;
+    margin-left: 14%;
+}
+.Profile_SaveBtn:hover {
+    color: white;
+}
+.Profile_CancelBtn {
+    width: 170px;
+    height: 45px;
+    border: none;
+    border-radius: 5px;
+    background-color: salmon;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 11px;
+    margin-left: 10%;
+}
+.Profile_CancelBtn:hover {
+    color: white;
+}
+
+
+
+
+.image-upload {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#chooseFile {
+    visibility: hidden;
+}
+
+.image-show {
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.img {
+    position: absolute;
+}
+
+#Profile_picture{
+    width: 150px; 
+    height:150px; 
+    border-radius: 70%; 
+    overflow: hidden; 
+    margin-left: 45px; 
+    border: 1px solid grey;
+    position: absolute;
+    top: 25px;
+    left: 158px;
+}
+#Picture_AddBtn {
+    width: 50px; 
+    height: 50px;
+    position: absolute;
+    top: 170px;
+    left: 340px;
+}
+#User_Picture{
+    width: 150px; 
+    height:150px; 
+    border-radius: 70%; 
+    overflow: hidden; 
+    margin-left: 45px; 
+    box-shadow: 5px 5px 5px ;
+}
