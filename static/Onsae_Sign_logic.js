@@ -9,7 +9,7 @@ async function login(){//로그인 버튼을 누르면 입력된 값을 받아�
 		id : ID,
 		password : PW
 	});
-	await axios.post('http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/manager_login',{
+	await axios.post('http://144.24.81.201/process/login',{
         id :ID,
         password : PW
     }).then(function(response){
@@ -27,7 +27,8 @@ async function login(){//로그인 버튼을 누르면 입력된 값을 받아�
                 document.getElementById('Admin_Id').style.borderColor = "red";
                 break;
             case 1://로그인성공
-                location.href= "./Onsae_Main_page.html";
+				location.href = "http://144.24.81.201"
+                //location.href= "./Onsae_Main_page.html";
 
                 break;
             case 2://비밀번호 틀림
