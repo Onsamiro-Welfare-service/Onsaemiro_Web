@@ -29,6 +29,9 @@ setInterval(() => Request_UserList_Api(), 180000);//3분마다 사용자 정보 
 
 function create_Profile(){
     let parent = document.getElementById("Profile_Div");
+    if(parent.children.length > 0){
+        document.getElementById("Profile_Div").innerHTML = "";
+    }
     for(let i=0; i< UserList.length; i++){
         let child = document.createElement('div');
         child.setAttribute('id', eval("'User" + i + "'"));
