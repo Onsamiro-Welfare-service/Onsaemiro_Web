@@ -1,25 +1,12 @@
-var LoginAccess = 0;//서버에서 
+var LoginAccess = 1;//서버에서 
 var ServerValue = "SDBG0112";//서버에서 받아오는 매니저 아이디값 저장 
-
-async function login(){//로그인 버튼을 누르면 입력된 값을 받아오는 함수
+function login(){//로그인 버튼을 누르면 입력된 값을 받아오는 함수
     let ID = document.getElementById('Admin_Id').value;
     let PW = document.getElementById('Admin_Code').value;
     console.log("사용자 아이디: " + ID + "인증번호는: " + PW);
-	var form = String({
-		id : ID,
-		password : PW
-	});
-	await axios.post('http://144.24.81.201/process/login',{
-        id :ID,
-        password : PW
-    }).then(function(response){
-		LoginAccess = response.data;
-	}).catch(function(err){
-		console.log(err);
-		alert('ERROR!');
-	});
     
     if(is_Blank('Admin_Id') && is_Blank('Admin_Code')){
+        //서버에 ID, Password 값 보내서 요청
         //리턴값 LoginAccess에 저장 
         switch(LoginAccess){
             case 0://id틀림
@@ -27,9 +14,7 @@ async function login(){//로그인 버튼을 누르면 입력된 값을 받아�
                 document.getElementById('Admin_Id').style.borderColor = "red";
                 break;
             case 1://로그인성공
-				location.href = "http://144.24.81.201"
-                //location.href= "./Onsae_Main_page.html";
-
+                location.href= "./Onsae_Main_page.html";
                 break;
             case 2://비밀번호 틀림
                 alert("비밀번호가 틀렸습니다.");
