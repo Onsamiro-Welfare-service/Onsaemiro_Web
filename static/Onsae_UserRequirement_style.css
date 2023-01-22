@@ -40,7 +40,7 @@
     border-left: 2px solid black; 
     border-right: 2px solid black;
     width: 990px; 
-    height: 400px;
+    /* height: 400px; */
     position: relative;
     top: -1px;
     overflow-y: auto;
