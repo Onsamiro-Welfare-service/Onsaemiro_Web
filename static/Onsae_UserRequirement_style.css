@@ -1,0 +1,76 @@
+.Requirement_main_style {
+    background-color: white;
+    width: auto; 
+    height: auto;
+    padding: 10px;
+    padding-bottom: 0;
+    box-shadow: 0 0 0.875rem 0 rgb(33 37 41 / 5%);
+}
+.Requirement_header_style{
+    border: 2px solid black; 
+    border-radius: 5px; 
+    width: 990px; 
+    height: 40px; 
+    padding-top: 10px;
+}
+.header_title_style {
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-left: 10px;
+}
+.header_usrid_style {
+    font-size: 15px; 
+    font-weight: bold;
+}
+.header_icon_style {
+    float:right; 
+    border-radius: 8px; 
+    border: 10px solid rgba(255,59,48); 
+    margin-right: 10px; 
+    margin-top: 3px;
+}
+.header_status_style {
+    float: right;
+    font-size: 19px;
+    font-weight: bold; 
+    margin-right: 7px;
+    color: black
+}
+.Requirement_body_style {
+    border-left: 2px solid black; 
+    border-right: 2px solid black;
+    width: 990px; 
+    height: 400px;
+    position: relative;
+    top: -1px;
+    overflow-y: auto;
+}
+.Requirement_body_style::-webkit-scrollbar {
+    display: none;
+}
+.body_ImgDiv_style {
+    border: 2px solid orange; 
+    width: 890px;
+    height: 250px; 
+    margin-left: 50px; 
+    text-align: center;
+}
+.body_txt_style {
+    margin: 10px 0 0 50px; 
+    width: 890px; 
+    height: auto; 
+    font-size: 20px; 
+    font-weight: bold;
+}
+.Requirement_btn_style {
+    width: 990px; 
+    height: 50px;
+    position: relative;
+    top: -1px;
+}
+.Requirement_btn_style {
+    width: 496px;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+}

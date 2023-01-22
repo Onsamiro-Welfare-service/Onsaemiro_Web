@@ -21,11 +21,14 @@ function Request_UserList_Api(){
     if(UserList.length > 0){//받아온 값이 있을때 프로필카드 생성
         create_Profile();
     }
+    Local_Saved();//사용자 정보를 로컬에 저장
 }
 
 setInterval(() => Request_UserList_Api(), 180000);//3분마다 사용자 정보 받아오게끔
 
-
+function Local_Saved(){//사용자 리스트를 로컬스토리지에 저장하는 함수
+    localStorage.setItem("UserList", JSON.stringify(UserList));
+}
 
 function create_Profile(){
     let parent = document.getElementById("Profile_Div");
