@@ -51,7 +51,7 @@
 .body_ImgDiv_style {
     border: 2px solid orange; 
     width: 890px;
-    height: 250px; 
+    height: auto; 
     margin-left: 50px; 
     text-align: center;
 }

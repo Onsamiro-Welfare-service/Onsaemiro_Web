@@ -4,7 +4,8 @@ var UserList = [
 var UserRequirementList = [//웹에 저장된 사용자 요구사항 리스트
     //{ id: "Error Code: 404 Not Found", date: "", is_photo: false, text: "사용자 요구사항 데이터를 정상적으로 불러오지 못했습니다", photo: "" }
     { id: "UserId1111", date: '01-10-18:32', is_photo: false, text: "질문내용 이거저거그것", photo: "src~~~~" },
-    { id: "UserId2222", date: '01-10-18:32', is_photo: true, text: "질문내용 이거저거그것", photo: "../src/img/avatars/avatar-2.jpg" }
+    { id: "UserId2222", date: '01-10-18:32', is_photo: true, text: "질문내용 이거저거그것", photo: "../src/img/avatars/avatar-2.jpg" },
+    { id: "UserID3333", date: '01-11-12:31', is_photo: true, text: "안녕하세요 여기는 이거고 저거고 있다.", photo: "./제목 없음.png"}
 ];
 var NewRequirementList = [//서버에서 불러온 사용자 요구사항 리스트
     // { id: "UserId1111", date: '01-10-18:32', is_photo: false, text: "질문내용 이거저거그것", photo: "src~~~~"}
@@ -172,7 +173,7 @@ function Create_User_requirement(Obj){//생성되는 항목에 값 넣기
                 Img.setAttribute('class', 'body_ImgDiv_style');
                     let Img_src = document.createElement('img');
                     Img_src.setAttribute('src', eval("'" + Obj.photo + "'"));
-                    Img_src.setAttribute('style', 'margin-top: 2%;');
+                    Img_src.setAttribute('style', 'width: 100%; height: auto;');
                     Img.appendChild(Img_src);
                 body.appendChild(Img);
             } else {//없다면
