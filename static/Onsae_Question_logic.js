@@ -22,14 +22,14 @@ var Category_S_Arr = [
     { code: "S4444", category: "S", type: "1", question:"안전 질문내용4444", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-4.jpg", alive: true },
 ];
 var Category_H_Arr = [
-    { code: "H1111", category: "S", type: "1", question:"건강 질문내용1111", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-1.jpg", alive: true },
-    { code: "H2222", category: "S", type: "1", question:"건강 질문내용2222", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-2.jpg", alive: true },
-    { code: "H3333", category: "S", type: "1", question:"건강 질문내용3333", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-3.jpg", alive: true },
-    { code: "H4444", category: "S", type: "1", question:"건강 질문내용4444", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-4.jpg", alive: true },
+    { code: "H1111", category: "H", type: "1", question:"건강 질문내용1111", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-1.jpg", alive: true },
+    { code: "H2222", category: "H", type: "1", question:"건강 질문내용2222", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-2.jpg", alive: true },
+    { code: "H3333", category: "H", type: "1", question:"건강 질문내용3333", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-3.jpg", alive: true },
+    { code: "H4444", category: "H", type: "1", question:"건강 질문내용4444", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-4.jpg", alive: true },
 ];
 var Category_M_Arr = [
-    { code: "S1111", category: "S", type: "1", question:"안전 질문내용1111", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-1.jpg", alive: true },
-    { code: "S2222", category: "S", type: "1", question:"안전 질문내용2222", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-2.jpg", alive: true },
+    { code: "M1111", category: "M", type: "1", question:"마음 질문내용1111", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-1.jpg", alive: true },
+    { code: "M2222", category: "M", type: "1", question:"마음 질문내용2222", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-2.jpg", alive: true },
 ];
 //초기실행
 Request_API("DL");
@@ -54,18 +54,22 @@ function Request_API(category){//Request_API("DL");
         case "DL":
             //Category_DL_Arr = ReturnVal;
             create_QuestionList("DailyLife");
+            checkDaily(true, "DailyLife");
             break;
         case "S":
             //Category_S_Arr = ReturnVal;
             create_QuestionList("Safe");
+            checkSafe(true, "Safe");
             break;
         case "H":
             //Category_H_Arr = ReturnVal;
             create_QuestionList("Health");
+            checkHealth(true, "Health");
             break;
         case "M":
             //Category_M_Arr = ReturnVal;
             create_QuestionList("Mind");
+            checkMind(true, "Mind");
             break;
         default:
             console.log("Error Code 404");
@@ -81,15 +85,15 @@ function create_QuestionList(category){//create_QuestionList("Safe")
             categoryIcon_txt = "안전";
             QuestionList_Arr = Category_S_Arr;
             break;
-        case "Health":
+        case "Mind":
             categoryIcon_color = "#F35588";
             categoryIcon_txt = "마음";
-            QuestionList_Arr = Category_H_Arr;
+            QuestionList_Arr = Category_M_Arr;
             break;
-        case "Mind":
+        case "Health":
             categoryIcon_color = "#007944";
             categoryIcon_txt = "건강";
-            QuestionList_Arr = Category_M_Arr;
+            QuestionList_Arr = Category_H_Arr;
             break;
         case "DailyLife":
             categoryIcon_color = "#fd7e14";
@@ -118,7 +122,7 @@ function create_QuestionList(category){//create_QuestionList("Safe")
             child.appendChild(QuestionContent);
         parent.appendChild(child);
     }
-
+    is_Empty();
 }
 
 
@@ -200,18 +204,17 @@ function Show_Question(bool, category){
 
 function is_Empty(){
     let listInner = document.getElementsByClassName("Question_Style");
-    let is_Find = false;
+    let is_Find = true;
     for(let i=0; i < listInner.length; i++){
         if(listInner[i].style.display == "block"){
-            is_Find = true;
-        }
-        if(!is_Find){
-            document.getElementById("Empty_Question").style.display = "block";
-        } else {
-            document.getElementById("Empty_Question").style.display = "none";
+            is_Find = false;
         }
     }
-
+    if(is_Find){
+        document.getElementById("Empty_Question").style.display = "block";
+    } else {
+        document.getElementById("Empty_Question").style.display = "none";
+    }
 
 }
 
@@ -232,6 +235,14 @@ function openpreview(){
 function closepreview(){
     document.getElementById("preview_bg").style.display ='none';
     document.getElementById("preview_modal").style.display ='none';
+
+    //선택형-2항일때 기존 데이터 초기화
+    document.getElementById("QuestionImg_screen").innerHTML = "";
+    document.getElementById("QuestionTxt_screen").innerText = "";
+    document.getElementById("AnswerImg1").innerHTML = "";
+    document.getElementById("AnswerImg2").innerHTML = "";
+    document.getElementById("AnswerTxt1").innerText = "";
+    document.getElementById("AnswerTxt2").innerText = "";
 }
 
 
@@ -389,7 +400,7 @@ function set_Preview(){//미리보기 화면 구성
         var container = document.getElementById("AnswerImg1");
         container.appendChild(Answer1Image);
     }
-    document.getElementById("QuestionTxt_screen").innerText = Answer1Txt;
+    document.getElementById("AnswerTxt1").innerText = Answer1Txt;
 
     let is_Answer2Img = (document.getElementById("Answer2_Img").children.length > 0);
     let Answer2Txt = document.getElementById("Answer2").value;
@@ -403,7 +414,7 @@ function set_Preview(){//미리보기 화면 구성
         var container = document.getElementById("AnswerImg2");
         container.appendChild(Answer2Image);
     }
-    document.getElementById("QuestionTxt_screen").innerText = Answer2Txt;
+    document.getElementById("AnswerTxt2").innerText = Answer2Txt;
 }
 
 function Create_Question(){//생성하기를 누르면 입력된 정보 다 긁어오고 기존 정보 초기화
