@@ -56,12 +56,13 @@ var Category_H_Arr = [
 
 
 function RequestData(UserId){//리퀘스트 값
-  console.log('실행');
-  let Today_Date = RequestTime();//날짜값
+  //let Today_Date = RequestTime();//날짜값
   let Api_Obj = new Object();
   Api_Obj.id = UserId;
-  Api_Obj.date = Today_Date;
+  Api_Obj.date = document.getElementById("Modal_bar_date").value;
   Api_Obj.category = "DL";//DL S H M
+  //console.log("RequestData(" + UserId + "):");
+  //console.log(Api_Obj);
   Request_UserStatus_Api(Api_Obj);
   //Category_DL_Arr = 받아오는 데이터
 
@@ -81,7 +82,7 @@ function RequestData(UserId){//리퀘스트 값
 }
 
 function Request_UserStatus_Api(Obj){
-  console.log("문진표 조회하기" + Obj.id + " " + Obj.date + " " + Obj.category);
+  //console.log("문진표 조회하기" + Obj.id + " " + Obj.date + " " + Obj.category);
   /*답변 불러오기:get
   https://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_answer
   {
@@ -138,7 +139,7 @@ function DailyLifeSurvey(parent_val){//DL부분 만드는 함수 / 질의응답 
       let DL_title_str = document.createTextNode('일상');
       DL_title.setAttribute('id', 'Answer_DailyLifeDiv');
       DL_title.setAttribute('class', 'Category_Icon');
-      DL_title.setAttribute('style', 'border: 2px solid red; color: red;');
+      DL_title.setAttribute('style', 'border: 2px solid #fd7e14; color: #fd7e14;');
       DL_title.appendChild(DL_title_str);
       DLChild.appendChild(DL_title);
       for(let i=0;i< Category_DL_Arr.length; i++){//질문답변 배열 갯수에 맞춰 생성
@@ -169,7 +170,7 @@ function SafeSurvey(parent_val){//Safe부분 만드는 함수 / 질의응답 갯
       let S_title_str = document.createTextNode('안전');
       S_title.setAttribute('id', 'Answer_DailyLifeDiv');
       S_title.setAttribute('class', 'Category_Icon');
-      S_title.setAttribute('style', 'border: 2px solid red; color: red;');
+      S_title.setAttribute('style', 'border: 2px solid #FF2626; color: #FF2626;');
       S_title.appendChild(S_title_str);
       S_Child.appendChild(S_title);
       for(let i=0;i< Category_S_Arr.length; i++){//질문답변 배열 갯수에 맞춰 생성
@@ -200,7 +201,7 @@ function HealthSurvey(parent_val){//Health부분 만드는 함수 / 질의응답
       let H_title_str = document.createTextNode('건강');
       H_title.setAttribute('id', 'Answer_DailyLifeDiv');
       H_title.setAttribute('class', 'Category_Icon');
-      H_title.setAttribute('style', 'border: 2px solid red; color: red;');
+      H_title.setAttribute('style', 'border: 2px solid #007944; color: #007944;');
       H_title.appendChild(H_title_str);
       H_Child.appendChild(H_title);
       for(let i=0;i< Category_H_Arr.length; i++){//질문답변 배열 갯수에 맞춰 생성
@@ -231,7 +232,7 @@ function MindSurvey(parent_val){//Mind부분 만드는 함수 / 질의응답 갯
       let M_title_str = document.createTextNode('마음');
       M_title.setAttribute('id', 'Answer_DailyLifeDiv');
       M_title.setAttribute('class', 'Category_Icon');
-      M_title.setAttribute('style', 'border: 2px solid red; color: red;');
+      M_title.setAttribute('style', 'border: 2px solid #F35588; color: #F35588;');
       M_title.appendChild(M_title_str);
       M_Child.appendChild(M_title);
       for(let i=0;i< Category_M_Arr.length; i++){//질문답변 배열 갯수에 맞춰 생성

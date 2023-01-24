@@ -173,7 +173,7 @@ function Create_User_requirement(Obj){//생성되는 항목에 값 넣기
                 Img.setAttribute('class', 'body_ImgDiv_style');
                     let Img_src = document.createElement('img');
                     Img_src.setAttribute('src', eval("'" + Obj.photo + "'"));
-                    Img_src.setAttribute('style', 'width: 100%; height: auto;');
+                    Img_src.setAttribute('style', 'width: auto; height: 100%;');
                     Img.appendChild(Img_src);
                 body.appendChild(Img);
             } else {//없다면

@@ -31,8 +31,7 @@ function onClick(UserId) {//클릭하면 해당 사용자 데이터값 요청해
     parent.appendChild(dateInp);
 
     document.getElementById("Modal_bar_date").setAttribute('onchange', eval("'RequestData(`" + UserId + "`)'"));//RequestData('사용자1')
-    //RequestData(UserId);//오늘의 날짜에 해당하는 사용자 문진표 불러오기
-    RequestData(UserId);
+    RequestData(UserId);//오늘의 날짜에 해당하는 사용자 문진표 불러오기
 } 
 function offClick() {//
     document.getElementById('UserStatus_modal_bg').style.display ='none';
