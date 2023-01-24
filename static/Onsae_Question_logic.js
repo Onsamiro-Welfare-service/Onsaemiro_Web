@@ -226,6 +226,28 @@ function openModal(){
 function closeModal(){
     document.getElementById("Input_Survey_bg").style.display ='none';
     document.getElementById("Input_Survey_modal").style.display ='none';
+
+    //선택형-2항일때 기존 데이터 초기화
+    document.getElementById("Question_Img").innerHTML = "";
+    document.getElementById("Question_Img").style.display = "none";
+    document.getElementById("Question_Txt").innerText = "* 필수입력 사항입니다";
+    document.getElementById("Question_Txt").style.color = "black";
+    document.getElementById("Question").value = "";
+    document.getElementById("Question_file").value = "";
+
+    document.getElementById("Answer1_Img").innerHTML = "";
+    document.getElementById("Answer1_Img").style.display = "none";
+    document.getElementById("Answer1_Txt").innerText = "* 필수입력 사항입니다";
+    document.getElementById("Answer1_Txt").style.color = "black";
+    document.getElementById("Answer1").value = "";
+    document.getElementById("Answer1_file").value = "";
+
+    document.getElementById("Answer2_Img").innerHTML = "";
+    document.getElementById("Answer2_Img").style.display = "none";
+    document.getElementById("Answer2_Txt").innerText = "* 필수입력 사항입니다";
+    document.getElementById("Answer2_Txt").style.color = "black";
+    document.getElementById("Answer2").value = "";
+    document.getElementById("Answer2_file").value = "";
 }
 function openpreview(){
     document.getElementById("preview_bg").style.display ='block';
@@ -504,6 +526,7 @@ function Create_Question(){//생성하기를 누르면 입력된 정보 다 긁�
 
     console.log(Request_API_Obj);
     Request_API_Question(Request_API_Obj);
+    closeModal();
 }
 function Post_Img(Img_file){//이미지 파일 업로드
     // 사진 업로드 : post
