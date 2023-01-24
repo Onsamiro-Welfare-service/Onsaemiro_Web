@@ -14,18 +14,23 @@
 .categoryBtn {
     width: 130px;
     height: 40px;
-    border: 1px solid grey;
+    border: 1px solid gainsboro;
+    font-weight: bold;
 }
 #QuestionList {
     width:auto; 
     height: 700px; 
-    border: 1px solid black; 
+    border: 1px solid gainsboro; 
     margin: 10px; 
     margin-top: 20px; 
     padding: 15px;
+    overflow-y: auto;
+}
+#QuestionList::-webkit-scrollbar {
+    display: none;
 }
 .Question_Style {
-    border: 1px solid black; 
+    border: 1px solid gray; 
     height: auto; 
     margin-bottom: 15px; 
     padding: 8px;
@@ -49,7 +54,7 @@
 
 /* 모달창 */
 .modal_wrap {
-    display: block;
+    display: none;
     width: 800px;
     height: 700px;
     position: absolute;
@@ -62,7 +67,7 @@
 }
 
 .black_bg {
-    display: block;
+    display: none;
     position: absolute;
     content: "";
     width: 100%;
@@ -91,4 +96,100 @@
 }
 #Question_Main::-webkit-scrollbar {
     display: none;
+}
+
+/* 질문 생성 파트 */
+.Question_body {
+    font-size: 20px; 
+    font-weight: bold; 
+    color: black; 
+    margin-left: 10px; 
+    border: 1px solid gainsboro; 
+    padding: 8px;
+}
+.ImgBtn_style {
+    position:relative; 
+    top:-32px; 
+    left: -10px; 
+    float: right; 
+    width: 30px; 
+    height: 30px;
+}
+.Text_style {
+    width: 100%; 
+    display: inline-block;
+}
+.Answer_Img_style {
+    border: 1px solid black; 
+    width: 150px; 
+    height: 150px; 
+    margin-left: 40%;
+    margin-top: 15px;
+}
+#Question_Img {
+    border: 1px solid black; 
+    width: 250px; 
+    height: 250px; 
+    margin-left: 35%;
+    margin-top: 15px;
+}
+
+/* 미리보기 화면 구성*/
+#phone_body {
+    border: 1px solid black; 
+    width: 400px; 
+    height: 100%; 
+    border-radius: 10px; 
+    background-color: black; 
+    margin-left: 25%;
+}
+#phone_screen {
+    width: 380px; 
+    height: 90%; 
+    background-color: white;
+    margin-left: 9px; 
+    margin-top: 25px;
+}
+#Question_Screen {
+    width: 370px; 
+    height: 320px; 
+    margin-left: 5px;
+}
+#Answer_Screen {
+    width: 370px; 
+    height: 234px; 
+    margin-left: 5px;
+}
+.QuestionImg_style {
+    width: 250px; 
+    height: 250px; 
+    margin-left: 59px; 
+    margin-top: 5px;
+}
+.QuestionTxt_style {
+    width: 250px; 
+    height: 50px; 
+    margin-left: 59px; 
+    text-align: center; 
+    font-weight: bold; 
+    font-size: 15px;
+    padding: 3px;
+}
+.AnswerImg_style {
+    width: 180px; 
+    height: 180px; 
+    margin-left: 1px; 
+    display: inline-block;
+}
+.AnswerTxt_style {
+    width: 180px; 
+    height: 50px; 
+    margin-left: 1px; 
+    display: inline-block; 
+    position: relative; 
+    top: -7px; 
+    text-align: center;
+    font-weight: bold; 
+    font-size: 15px; 
+    padding: 3px;
 }

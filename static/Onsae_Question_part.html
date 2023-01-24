@@ -281,14 +281,14 @@
 									<input type="text" id="search_Question" onkeyup="filter()" placeholder="질문 내용을 입력하여 검색하세요.">
 									<input type="button" id="create_Question" value="질문 생성하기" onclick="openModal()">
 									<div id="category_header" style="margin-top: 15px; margin-left: 15px;">
-										<input type="button" id="categoryBtn_M" class="categoryBtn" value="마음" onclick="checkMind()" style="background-color: lightcoral;">
-										<input type="button" id="categoryBtn_H" class="categoryBtn" value="건강" onclick="checkHealth()"style="background-color: yellowgreen;">
-										<input type="button" id="categoryBtn_S" class="categoryBtn" value="안전" onclick="checkSafe()"style="background-color: red;">
-										<input type="button" id="categoryBtn_DL" class="categoryBtn" value="일상" onclick="checkDaily()"style="background-color: sandybrown;">
+										<input type="button" id="categoryBtn_S" class="categoryBtn" value="안전" onclick="checkSafe()"style="background-color: #F7A4A4;">
+										<input type="button" id="categoryBtn_M" class="categoryBtn" value="마음" onclick="checkMind()" style="background-color: #FEBE8C;">
+										<input type="button" id="categoryBtn_DL" class="categoryBtn" value="일상" onclick="checkDaily()"style="background-color: #FFFBC1;">
+										<input type="button" id="categoryBtn_H" class="categoryBtn" value="건강" onclick="checkHealth()"style="background-color: #B6E2A1;">
 									</div>
 									
 									<div id="QuestionList">
-										<div id="S_Question1" class="Question_Style" name="Safe"> 
+										<!-- <div id="S_Question1" class="Question_Style" name="Safe"> 
 											<span class="category_Icon" style="border: 2px solid red; color:red;">안전</span>
 											<span class="QuestionText">질문 생성 api 생성형식 (이 형식을 따르지 않으면 리액트 네이티브에서 사용이 불가함)</span>
 										</div> 
@@ -306,7 +306,7 @@
 										<div id="DL_Question1" class="Question_Style" name="DailyLife"> 
 											<span class="category_Icon" style="border: 2px solid sandybrown; color:sandybrown;">일상</span>
 											<span class="QuestionText">리턴값 : { id: 사용자 id, category: 카테고리, answer:저장한 답변 값, date: 저장한 날짜, time: 저장한 시간}위와 같이 배열 형식으로 되어 있고, 실제로는 질문지를 카테고리별로 하루에 많아야 3번 이상 할 일이 없으므로 이렇게 복잡하진 않을듯.</span>
-										</div> 
+										</div>  -->
 
 										<div id="Empty_Question" class="Question_Style" style="display: none;"> 
 											<span class="category_Icon" style="border: 2px solid black; color:black;">없음</span>
@@ -321,15 +321,15 @@
 				</div>
 				
 			</main>
-			<div id="Change_Info_Bg" class="black_bg"></div>
-			<div id="Change_Info_modal" class="modal_wrap" style="background-color: white;">
+			<div id="Input_Survey_bg" class="black_bg" style="display: none;"></div>
+			<div id="Input_Survey_modal" class="modal_wrap" style="background-color: white; display: none;">
 				<div style="background-color: transparent; width: 800px; height: 21px;">
 					<input type="button" id="modal_closeBtn"  value="X" onclick="closeModal()">
 				</div>
 				<h2 style="font-weight: bold;">새로운 질문 생성하기</h2>
 				<div id="Question_Main">
-					<div style="font-size: 20px; font-weight: bold; color: black; margin-left: 10px; border: 1px solid gainsboro; padding: 8px;">카테고리 선택
-						<select id="Question_Type" style="margin-left: 20px;">
+					<div class="Question_body">카테고리 선택
+						<select id="Question_category" style="margin-left: 20px;">
 							<option value="S">안전</option>
 							<option value="M">마음</option>
 							<option value="H">건강</option>
@@ -337,39 +337,73 @@
 						</select>
 					</div>
 
-					<div style="font-size: 20px; font-weight: bold; color: black; margin-left: 10px; border: 1px solid gainsboro; padding: 8px;">질문 종류
-						<select id="Question_Type" style="margin-left: 59px;">
-							<option value="1">슬라이더</option>
-							<option value="2">선택형(2항)</option>
-							<option value="3">선택형(3항)</option>
-							<option value="4">선택형(4항)</option>
+					<div class="Question_body">질문 종류
+						<select id="Question_Type" style="margin-left: 59px;" onchange="QuestionType()">
+							<option value="1" disabled>슬라이더</option>
+							<option value="2" selected>선택형(2항)</option>
+							<option value="3" disabled>선택형(3항)</option>
+							<option value="4" disabled>선택형(4항)</option>
 						</select>
 					</div>
 
-					<div style="font-size: 20px; font-weight: bold; color: black; margin-left: 10px; border: 1px solid gainsboro; padding: 8px;">질문 내용
-						<div style="width: 100%; height: 5px;"></div>
-						<input type="text" placeholder="질문내용을 입력하세요." style="width: 100%; display: inline-block;">
-						<input type="image" value="사진 추가하기" src="../src/img/icons/imgBtn.png" style="position:relative; top:-32px; left: -10px; float: right; width: 30px; height: 30px;">	
+					<div class="Question_body">질문 내용
+						<div id="Question_Img" style="display: none;"></div>
+						<div id="Question_Txt" style="color:black; font-size: 14px;">* 필수입력 사항입니다</div>
+						<input type="text" id="Question" class="Text_style" placeholder="질문내용을 입력하세요." onkeyup="Detect_Str('Question')">
+						<input type="image" class="ImgBtn_style" value="사진 추가하기" src="../src/img/icons/imgBtn.png" onclick="document.all.Question_file.click()">
+						<input type="file" id="Question_file" style="display: none;" onchange="loadFile(this, 'Question')">	
 					</div>
 					
 
-					<div style="font-size: 20px; font-weight: bold; color: black; margin-left: 10px; border: 1px solid gainsboro; padding: 8px;">답변 내용
+					<div id="Question_AnswerList" class="Question_body">답변 내용
 						<div style="width: 100%; height: 10px;"></div>
-						<div style="color:red; font-size: 14px;">* 해당 입력칸에 내용이 없습니다.</div>
-						<input type="text" placeholder="답변내용을 입력하세요." style="width: 100%; display: inline-block;">
-						<input type="image" value="사진 추가하기" src="../src/img/icons/imgBtn.png" style="position:relative; top:-32px; left: -10px; float: right; width: 30px; height: 30px;">
-						<input type="text" placeholder="답변내용을 입력하세요." style="width: 100%; display: inline-block;">
-						<input type="image" value="사진 추가하기" src="../src/img/icons/imgBtn.png" style="position:relative; top:-32px; left: -10px; float: right; width: 30px; height: 30px;">
-						<input type="text" placeholder="답변내용을 입력하세요." style="width: 100%; display: inline-block;">
-						<input type="image" value="사진 추가하기" src="../src/img/icons/imgBtn.png" style="position:relative; top:-32px; left: -10px; float: right; width: 30px; height: 30px;">
+						<div id="AnswerList_body">
+							<div>
+								<div id="Answer1_Img" class="Answer_Img_style" style="display: none;"></div>
+								<div id="Answer1_Txt" style="color:black; font-size: 14px;">* 필수입력 사항입니다</div>
+								<input type="text" id="Answer1" class="Text_style" placeholder="답변내용을 입력하세요." onkeyup="Detect_Str('Answer1')">
+								<input type="image" class="ImgBtn_style" value="사진 추가하기" src="../src/img/icons/imgBtn.png" onclick="document.all.Answer1_file.click()">
+								<input type="file" id="Answer1_file" style="display: none;" onchange="loadFile(this, 'Answer1')">
+							</div>
+							<div>
+								<div id="Answer2_Img" class="Answer_Img_style" style="display: none;"></div>
+								<div id="Answer2_Txt" style="color:black; font-size: 14px; margin-top: 10px;">* 필수입력 사항입니다.</div>
+								<input type="text" id="Answer2" class="Text_style" placeholder="답변내용을 입력하세요." onkeyup="Detect_Str('Answer2')">
+								<input type="image" class="ImgBtn_style" value="사진 추가하기" src="../src/img/icons/imgBtn.png" onclick="document.all.Answer2_file.click()">
+								<input type="file" id="Answer2_file" style="display: none;" onchange="loadFile(this, 'Answer2')">
+							</div>
+						</div>
 					</div>
 				</div>
 
-				<div style="font-size: 20px; font-weight: bold; color: black; margin-left: 10px; padding: 8px; text-align: right;">
-					<input type="button" value="미리보기" style="background-color: whitesmoke;">
-					<input type="button" value="저장하기" style="color: whitesmoke; background-color: black;">
+				<div class="Question_body" style="text-align: right; border: none;">
+					<input type="button" value="미리보기" onclick="openpreview()" style="background-color: whitesmoke;">
+					<input type="button" value="생성하기" onclick="Create_Question()" style="color: whitesmoke; background-color: black;">
 				</div>
-			</div>	
+			</div>
+			
+			<div id="preview_bg" class="black_bg" style="display: none;"></div>
+			<div id="preview_modal" class="modal_wrap" style="display: none; background-color: white;">
+				<div style="width: 100%; height: 620px;">
+					<div id="phone_body">
+						<div id="phone_screen"><!-- 선택 유형에 따라 디자인 변경-->
+							<div id="Question_Screen">
+								<div id="QuestionImg_screen" class="QuestionImg_style"></div>
+								<div id="QuestionTxt_screen" class="QuestionTxt_style">밥먹었어요?</div>
+							</div>
+							<div id="Answer_Screen">
+								<div id="AnswerImg1" class="AnswerImg_style"></div>
+								<div id="AnswerImg2" class="AnswerImg_style"></div>
+								<div id="AnswerTxt1" class="AnswerTxt_style">예</div>
+								<div id="AnswerTxt2" class="AnswerTxt_style">아니오</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="Question_body" style="text-align: right; border: none;">
+					<input type="button" value="뒤로가기" onclick="closepreview()" style="background-color: whitesmoke;">
+				</div>
+			</div>
 		</div>
 	</div>
 
