@@ -1,11 +1,11 @@
 var UserList = [
-    { User_Id: "UserId1111" ,Name: "김승주", birth: "0000-00-00", address: "주소1"}
+    //{ User_Id: "UserId1111" ,Name: "김승주", birth: "0000-00-00", address: "주소1"}
 ];//사용자 정보 리스트
 var UserRequirementList = [//웹에 저장된 사용자 요구사항 리스트
-    //{ id: "Error Code: 404 Not Found", date: "", is_photo: false, text: "사용자 요구사항 데이터를 정상적으로 불러오지 못했습니다", photo: "" }
-    { id: "UserId1111", date: '01-10-18:32', is_photo: false, text: "질문내용 이거저거그것", photo: "src~~~~" },
-    { id: "UserId2222", date: '01-10-18:32', is_photo: true, text: "질문내용 이거저거그것", photo: "../src/img/avatars/avatar-2.jpg" },
-    { id: "UserID3333", date: '01-11-12:31', is_photo: true, text: "안녕하세요 여기는 이거고 저거고 있다.", photo: "./제목 없음.png"}
+    { id: "Error Code: 404 Not Found", date: "", is_photo: false, text: "사용자 요구사항 데이터를 정상적으로 불러오지 못했습니다", photo: "" }
+    //{ id: "UserId1111", date: '01-10-18:32', is_photo: false, text: "질문내용 이거저거그것", photo: "src~~~~" },
+    //{ id: "UserId2222", date: '01-10-18:32', is_photo: true, text: "질문내용 이거저거그것", photo: "" },
+    //{ id: "UserID3333", date: '01-11-12:31', is_photo: true, text: "안녕하세요 여기는 이거고 저거고 있다.", photo: "./제목 없음.png"}
 ];
 var NewRequirementList = [//서버에서 불러온 사용자 요구사항 리스트
     // { id: "UserId1111", date: '01-10-18:32', is_photo: false, text: "질문내용 이거저거그것", photo: "src~~~~"}
@@ -66,7 +66,10 @@ function save_SessionData(){//화면에 보이는 요구사항 상태값을 모�
 
     //현재 세션 데이터 모두 긁어오기
     for(let p=0; p < parent_Count; p++){
-        UserRequirement_SessionArr.push(get_SessionData(p));   
+        let is_error = document.getElementById("Requirement" + p).children[0].children[1].innerText;
+        if(is_error != "Error Code: 404 Not Found"){
+            UserRequirement_SessionArr.push(get_SessionData(p));  
+        }   
     }
     //세션 데이터 로컬스토리지에 저장
     localStorage.setItem("UserRequirement_SessionData",JSON.stringify(UserRequirement_SessionArr));
@@ -91,31 +94,21 @@ function get_SessionData(index){//인덱스에 해당하는 해당 요구사항D
 }
 
 function Update_Session(index){//이전 세션 정보가 있다면 생성된 정보에 기존 정보를 덮어 씌우는 함수
-    if(index <= UserRequirement_LoadedArr.length){
-        document.getElementById("Requirement" + index + "_Status").innerText = UserRequirement_LoadedArr[index].status;
-        document.getElementById("Requirement" + index + "_Icon").style.borderColor = UserRequirement_LoadedArr[index].icon;
-        document.getElementById("Requirement" + index + "_ConfirmBtn").disabled = UserRequirement_LoadedArr[index].confirmBtn;
-        document.getElementById("Requirement" + index + "_CompleteBtn").disabled = UserRequirement_LoadedArr[index].completeBtn;
-        if(UserRequirement_LoadedArr[index].completeBtn) document.getElementById("Requirement" + index + "_body").style.borderBottom = "2px solid black";
+    if(UserRequirement_LoadedArr != null){
+        if(index <= UserRequirement_LoadedArr.length){
+            document.getElementById("Requirement" + index + "_Status").innerText = UserRequirement_LoadedArr[index].status;
+            document.getElementById("Requirement" + index + "_Icon").style.borderColor = UserRequirement_LoadedArr[index].icon;
+            document.getElementById("Requirement" + index + "_ConfirmBtn").disabled = UserRequirement_LoadedArr[index].confirmBtn;
+            document.getElementById("Requirement" + index + "_CompleteBtn").disabled = UserRequirement_LoadedArr[index].completeBtn;
+            if(UserRequirement_LoadedArr[index].completeBtn) document.getElementById("Requirement" + index + "_body").style.borderBottom = "2px solid black";
+        }
     }
 }
 
 
 
 
-//콘텐트 생성 및 데이터 관련 함수
-function Search_UserName(id){
-    let getData = localStorage.getItem("UserList");
-    UserList = JSON.parse(getData);
-    let is_find = "이름을 찾지 못했습니다";
-    UserList.forEach((elem, index) => {
-        let FindVal = elem.User_Id;
-        if(FindVal.indexOf(id) != -1){//값을 찾는다면 리턴
-            is_find = UserList[index].Name;
-        }
-    });
-    return is_find;//이름값을 찾는다면 "이름", 못찾는다면 "404" 리턴
-}
+
 
 function Create_User_requirement(Obj){//생성되는 항목에 값 넣기
     let parent = document.getElementById("RequirementList");
@@ -173,7 +166,7 @@ function Create_User_requirement(Obj){//생성되는 항목에 값 넣기
                 Img.setAttribute('class', 'body_ImgDiv_style');
                     let Img_src = document.createElement('img');
                     Img_src.setAttribute('src', eval("'" + Obj.photo + "'"));
-                    Img_src.setAttribute('style', 'width: auto; height: 100%;');
+                    Img_src.setAttribute('style', 'width: 100%; height: auto;');
                     Img.appendChild(Img_src);
                 body.appendChild(Img);
             } else {//없다면
@@ -210,11 +203,14 @@ function Create_User_requirement(Obj){//생성되는 항목에 값 넣기
         child.appendChild(Btn);
     parent.appendChild(child);      
     
-    if(UserRequirement_LoadedArr.length > 0){//생성된 요구사항에 이전 세션 정보가 있다면 적용
-        Update_Session(List_index);
+    if(UserRequirement_LoadedArr != null){
+        if(UserRequirement_LoadedArr.length > 0){//생성된 요구사항에 이전 세션 정보가 있다면 적용
+            Update_Session(List_index);
+        }
     }
 }
 
+//페이지 처음 로드시 실행
 if(document.getElementById("RequirementList").children.length == 0){//아무값도 없다면?
     for(let i=0; i < UserRequirementList.length; i++){
         Create_User_requirement(UserRequirementList[i]);
@@ -223,6 +219,15 @@ if(document.getElementById("RequirementList").children.length == 0){//아무값�
 
 function Delete_New_requirement(){//새로운 데이터 로드시 갱신
     if(NewRequirementList.length > UserRequirementList.length){
+        Request_UserList_Api();//사용자리스트 불러오기
+        if(UserRequirementList.length == 1){
+            let error = document.getElementsByClassName("header_usrid_style")[0].innerText;
+            if(error == "Error Code: 404 Not Found"){
+                document.getElementById("RequirementList").innerHTML = "";
+                UserRequirementList = [];
+            }
+        }
+
         for(let i=UserRequirementList.length; i < NewRequirementList.length; i++){
             UserRequirementList.push(NewRequirementList[i]);
             Create_User_requirement(NewRequirementList[i]);
@@ -230,17 +235,101 @@ function Delete_New_requirement(){//새로운 데이터 로드시 갱신
     }
 }
 
-function Request_UserRequirement_Api(){//사용자 요구사항 리스트 받아오는 함수
-    /**
-     * 요구사항 다운로드:get
-        http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_request
-        그냥 저장된 요구사항 다 불러짐
-     */
-    //UserRequirementList = 받아온 데이터 할당
-    //UserRequirementList.push()로 데이터 추가하지 말것! default값이 있기때문
+async function Request_UserRequirement_Api(){//사용자 요구사항 리스트 받아오는 함수
+    var manager_id = ''; 
+	var user_id_list = '';
+	var temp = [];
+	await axios.get('/process/get_session_user')
+	.then(function(response){
+		manager_id = response.data;
+		console.log(manager_id)
+	})
+	.catch(function(error){
+		console.log(error);
+		alert('ERROR!');
+	})
+	await axios.get('http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_user_list', {params : {
+		id : manager_id
+	}})
+	.then(function(response){
+		user_id_list = Object.values(response.data);
+		console.log(user_id_list);
+	})
+	.catch(function(err){
+		console.log(err);
+		alert('ERROR');
+	});
+	await axios.get('http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_user_list_all', {params: {
+		id : manager_id
+	}})
+	.then(function(response){
+		UserList = response.data;
+		console.log(UserList);
+	})
+	.catch(function(err){
+		console.log(err);
+		alert('ERROR');
+	});
+	for(i = 0; i<user_id_list.length; i++){
+		console.log(user_id_list[i]);
+		await axios.get('http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_request', {params : {
+			id : user_id_list[i].id
+		}})
+		.then(function(response){
+			for(j = 0; j < response.data.length; j++){
+				temp.push(response.data[j]);
+			}
+			console.log(response.data);
+		})
+	}
+	console.log('temp');
+	//console.log(temp);
+	NewRequirementList = temp;
+	console.log(NewRequirementList);
+
+
+    //NewRequirementList = 받아온 데이터 할당
+    //NewRequirementList.push()로 데이터 추가하지 말것! default값이 있기때문
     console.log("Request_Api");
     Delete_New_requirement();//새로운 데이터 로드 시
 }
 
+async function Request_UserList_Api(){
+    //맨처음 해당 페이지를 접속하면 사용자 데이터를 호출
+    // { manager_id : "SD1111" }
+    //console.log("Api로 사용자 리스트 all get 요청");
+    //리턴값으로 사용자 정보가 오면 UserList에 저장
+	await axios.get('http://144.24.81.201/process/get_session_user')
+	.then(function(response){
+		manager_id = response.data;
+	})
+	await axios.get('http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_user_list_all',{params:{
+		id : manager_id
+	}})
+	.then(function(response){
+		console.log(manager_id);
+		console.log("유저리스트받아오기");
+		console.log(response.data);
+		UserList = response.data;
+	});
 
-setInterval(() => Request_UserRequirement_Api(), 60000);//1분마다 사용자 요구사항 받아오게끔
+}
+Request_UserList_Api();//사용자리스트 불러오기
+
+//콘텐트 생성 및 데이터 관련 함수
+function Search_UserName(id){
+    // let getData = localStorage.getItem("UserList");
+    // UserList = JSON.parse(getData);
+    let is_find = "이름을 찾지 못했습니다";
+    if(UserList.length != 0){
+    UserList.forEach((elem, index) => {
+        let FindVal = elem.User_Id;
+        if(FindVal.indexOf(id) != -1){//값을 찾는다면 리턴
+            is_find = UserList[index].Name;
+        }
+    });
+    }
+    return is_find;//이름값을 찾는다면 "이름", 못찾는다면 "404" 리턴
+}
+
+setInterval(() => Request_UserRequirement_Api(), 6000);//1분마다 사용자 요구사항 받아오게끔
