@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<head>
+    <link href="./Onsae_Question_style.css" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="./Onsae_Question_logic.js"></script> 
+</head>
+<body>
+    <div id="preview_modal" class="modal_wrap" style="display: block; background-color: white;">
+        <div style="width: 100%; height: 620px;">
+            <div id="phone_body">
+                <div id="phone_screen"><!-- 선택 유형에 따라 디자인 변경-->
+                    <div id="phone_interior" style="width:360px; height:538px; margin:5px;">
+                        <!-- 선택 -  2항 -->
+                        <!-- <div id="Question_Interior" class="Question_2Choice" style="background-color: skyblue; border-radius:15px; width:340px; height: 300px; padding: 10px;">
+                            <div id="Question_Body" style="width: 320px; height: 280px; padding: 10px">
+                                <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 240px; height: 240px; margin-left: 40px;">
+                                <div id="Question_txt" style="text-align: center; font-size: 18px; font-weight: bold;">좋은 아침이에요! 잠은 잘 잤나요?좋은 아침이에요!좋은 아침이에요!</div>
+                            </div>
+
+                        </div>
+                        <div id="Answer_Group" style="margin-top: 10px; height: 206px;">
+                            <div id="Answer1_Interior" style="background-color: skyblue;border-radius:15px; width: 156px; height: 188px; padding: 10px;display:inline-block;">
+                                <div id="Answer1_body" style="width: 100%; height: 100%;">
+                                    <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 150px; height: 150px;margin-left: 4px;">
+                                    <div id="Answer1_txt" style="text-align: center; font-size: 15px; font-weight: bold;">좋은 아침이에요! 잠은 잘 잤나요?</div>
+                                </div>  
+                            </div>
+                            <div id="Answer2_Interior" style="background-color: skyblue;border-radius:15px; width: 156px; height: 188px; padding: 10px;display:inline-block;">
+                                <div id="Answer2_body" style="width: 100%; height: 100%;">
+                                    <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 150px; height: 150px; margin-left:4px;">
+                                    <div id="Answer2_txt" style="text-align: center; font-size: 15px; font-weight: bold;">좋은 아침이에요! 잠은 잘 잤나요?</div>
+                                </div>  
+                            </div>
+                        </div> -->
+
+
+                        <!-- 선택 -  3항 -->
+                        <!-- <div id="Question_Interior" class="Question_3Choice" style="background-color: skyblue; border-radius:15px; width:340px; height: 300px; padding: 10px;">
+                            <div id="Question_Body" style="width: 320px; height: 280px; padding: 10px">
+                                <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 240px; height: 240px; margin-left: 40px;">
+                                <div id="Question_txt" style="text-align: center; font-size: 18px; font-weight: bold;">좋은 아침이에요! 잠은 잘 잤나요?좋은 아침이에요!좋은 아침이에요!</div>
+                            </div>
+
+                        </div>
+                        <div id="Answer_Group" style="margin-top: 10px; height: 206px;">
+                            <div id="Answer1_Interior" style="background-color: skyblue;border-radius:15px; width: 95px; height: 188px; padding: 10px;display:inline-block;">
+                                <div id="Answer1_body" style="width: 100%; height: 100%;">
+                                    <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 95px; height: 150px;">
+                                    <div id="Answer1_txt" style="text-align: center; font-size: 15px; font-weight: bold;">좋은 아침이에요! 잠은 잘</div>
+                                </div>  
+                            </div>
+                            <div id="Answer2_Interior" style="background-color: skyblue;border-radius:15px; width: 95px; height: 188px; padding: 10px;display:inline-block;">
+                                <div id="Answer2_body" style="width: 100%; height: 100%;">
+                                    <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 95px; height: 150px;">
+                                    <div id="Answer2_txt" style="text-align: center; font-size: 15px; font-weight: bold;">좋은 아침이에요! 잠은 잘</div>
+                                </div>  
+                            </div>
+                            <div id="Answer3_Interior" style="background-color: skyblue;border-radius:15px; width: 95px; height: 188px; padding: 10px;display:inline-block;">
+                                <div id="Answer3_body" style="width: 100%; height: 100%;">
+                                    <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 95px; height: 150px;">
+                                    <div id="Answer3_txt" style="text-align: center; font-size: 15px; font-weight: bold;">좋은 아침이에요! 잠은 잘</div>
+                                </div>  
+                            </div>
+                        </div> -->
+                        <!-- 선택 -  4항 -->
+
+                        <div id="Question_Interior" class="Ques=tion_4Choice" style="background-color: skyblue; border-radius:15px; width:340px; height: 250px; padding: 10px;">
+                            <div id="Question_Body" style="width: 320px; height: 240px; margin-left: 10px;">
+                                <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 200px; height: 200px; margin-left: 60px;">
+                                <div id="Question_txt" style="text-align: center; font-size: 18px; font-weight: bold;">좋은 아침이에요! 잠은 잘 잤나요?좋은 아침이에요!좋은 아침이에요!</div>
+                            </div>
+                        </div>
+                        <div id="Answer_Group" style="margin-top: 5px; height: 206px;">
+                            <div id="Answer1_Interior" style="background-color: skyblue;border-radius:15px; width: 166px; height: 120px; padding: 5px;display:inline-block;">
+                                <div id="Answer1_body" style="width: 100%; height: 100%;">
+                                    <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 100px; height: 100px; margin-left: 30px;">
+                                    <div id="Answer1_txt" style="text-align: center; font-size: 13px; font-weight: bold;">좋은 아침이에요! 잠은 잘</div>
+                                </div>  
+                            </div>
+                            <div id="Answer2_Interior" style="background-color: skyblue;border-radius:15px; width: 166px; height: 120px; padding: 5px;display:inline-block;">
+                                <div id="Answer2_body" style="width: 100%; height: 100%;">
+                                    <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 100px; height: 100px; margin-left: 30px;">
+                                    <div id="Answer2_txt" style="text-align: center; font-size: 13px; font-weight: bold;">좋은 아침이에요! 잠은 잘</div>
+                                </div>  
+                            </div><br>
+                            <div id="Answer3_Interior" style="background-color: skyblue;border-radius:15px; width: 166px; height: 120px; padding: 5px;display:inline-block; margin-top: 3px;">
+                                <div id="Answer3_body" style="width: 100%; height: 100%;">
+                                    <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 100px; height: 100px; margin-left: 30px;">
+                                    <div id="Answer3_txt" style="text-align: center; font-size: 13px; font-weight: bold;">좋은 아침이에요! 잠은 잘</div>
+                                </div>  
+                            </div>
+                            <div id="Answer4_Interior" style="background-color: skyblue;border-radius:15px; width: 166px; height: 120px; padding: 5px;display:inline-block; margin-top: 3px;">
+                                <div id="Answer4_body" style="width: 100%; height: 100%;">
+                                    <img class="img" src="./img/icons/4444.PNG" style="border-radius: 20px; font-size: 18px; width: 100px; height: 100px; margin-left: 30px;">
+                                    <div id="Answer4_txt" style="text-align: center; font-size: 13px; font-weight: bold;">좋은 아침이에요! 잠은 잘</div>
+                                </div>  
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Question_body" style="text-align: right; border: none;">
+            <input type="button" value="뒤로가기" onclick="closepreview()" style="background-color: whitesmoke;">
+        </div>
+    </div>
+</body>

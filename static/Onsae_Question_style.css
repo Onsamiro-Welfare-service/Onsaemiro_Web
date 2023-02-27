@@ -144,21 +144,30 @@
     margin-left: 25%;
 }
 #phone_screen {
-    width: 380px; 
-    height: 90%; 
+    width: 370px;
+    height: 552px;
     background-color: white;
-    margin-left: 9px; 
+    margin-left: 10px;
     margin-top: 25px;
+    padding: 5px;
 }
-#Question_Screen {
+/* #Question_Screen {    
     width: 370px; 
-    height: 320px; 
+    height: 320px;
+    border-radius: 20px; 
+    margin: 2px;
     margin-left: 5px;
+    padding: 5px;
+    background-color: skyblue;
 }
 #Answer_Screen {
     width: 370px; 
     height: 234px; 
+    border-radius: 20px;
+    margin: 2px;
     margin-left: 5px;
+    padding: 5px;
+    background-color: skyblue;
 }
 .QuestionImg_style {
     width: 250px; 
@@ -193,3 +202,21 @@
     font-size: 15px; 
     padding: 3px;
 }
+
+.Question_CloseBtn {
+    border:none;
+    float:right; 
+    background-color:transparent;
+    font-size: 20px; 
+    font-weight:bold;
+}
+.Question_CloseBtn:hover {
+    color: red;
+}
+.AnswerText {
+    font-size: 18px;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 105px;
+    color: rgb(70, 70, 70);
+} */
