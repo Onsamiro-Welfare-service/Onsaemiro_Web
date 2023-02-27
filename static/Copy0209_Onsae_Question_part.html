@@ -22,19 +22,19 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="http://onsaemiro.website/main"> <!-- 여기 -->
+						<a class="sidebar-link" href="http://144.24.81.201/main"> <!-- 여기 -->
 						 <span class="align-middle">메인</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item active">
-						<a class="sidebar-link" href="http://onsaemiro.website/create_question"> <!-- 여기 -->
+						<a class="sidebar-link" href="http://144.24.81.201/create_question"> <!-- 여기 -->
 						 <span class="align-middle">질문 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="http://onsaemiro.website/user_requirement"> <!-- 여기 -->
+						<a class="sidebar-link" href="http://144.24.81.201/user_requirement"> <!-- 여기 -->
 						 <span class="align-middle">도움 요청 확인</span>
 						</a>
 					</li>
@@ -44,7 +44,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="http://onsaemiro.website/privacy"> <!-- 여기 -->
+						<a class="sidebar-link" href="http://144.24.81.201/privacy"> <!-- 여기 -->
 						 <span class="align-middle">개인정보처리방침</span>
 						</a>
 					</li>
@@ -94,29 +94,8 @@
 										<input type="button" id="categoryBtn_DL" class="categoryBtn" value="일상" onclick="checkDaily()"style="background-color: #FFFBC1;">
 										<input type="button" id="categoryBtn_H" class="categoryBtn" value="건강" onclick="checkHealth()"style="background-color: #B6E2A1;">
 									</div>
-									<script>
-										
-									</script>
+									
 									<div id="QuestionList">
-										<!-- div id="DL9803" class="Question_Style" name="DailyLife" onclick="show_Answer('DL9803_Answer')">
-											<input type="button" value="X" class="Question_CloseBtn" onclick="QuestionClose(`DL9803`)">
-											<span class="category_Icon" style="color:#fd7e14;">일상</span>
-											<span class="QuestionText">오늘 식사는 두 번 넘게 먹었나요?</span><br>
-											<div id="DL9803_Answer" style="display:none">
-												<div class="AnswerText">ㅇ 답변1: 아뇨많이 안먹었어요</div><br>
-												<div class="AnswerText">ㅇ 답변2: 네 오늘 세끼나 먹었어요</div><br>
-												<div class="AnswerText">ㅇ 답변3: 네 오늘도 두끼만 먹었어요</div><br>
-												<div class="AnswerText">ㅇ 답변4: 아니요 오늘 한끼도 안먹었어요</div><br>
-											</div>
-										</div -->
-
-										<!-- <div id="S7598" class="Question_Style" name="Safe">
-											<span class="category_Icon" style="color:#FF2626;">안전</span>
-											<span class="QuestionText">오늘 식사는 두번 넘게 먹었나요?</span>
-											<input type="button" value="X" style="border:none;float:right; background-color:transparent;font-size: 20px; font-weight:bold;" class="Question_CloseBtn" onclick="QuestionClose(`S7598`)">
-										</div> -->
-
-
 										<div id="Empty_Question" class="Question_Style" style="display: none;"> 
 											<span class="category_Icon" style="border: 2px solid black; color:black;">없음</span>
 											<span class="QuestionText">아무값도 찾지 못했습니다.</span>
@@ -148,20 +127,18 @@
 
 					<div class="Question_body">질문 종류
 						<select id="Question_Type" style="margin-left: 59px;" onchange="QuestionType()">
-							<option value="0">신체선택</option>
-							<option value="1">슬라이더</option>
+							<option value="1" disabled>슬라이더</option>
 							<option value="2" selected>선택형(2항)</option>
-							<option value="3">선택형(3항)</option>
-							<option value="4">선택형(4항)</option>
+							<option value="3" disabled>선택형(3항)</option>
+							<option value="4" disabled>선택형(4항)</option>
 						</select>
 					</div>
 
 					<div class="Question_body">질문 내용
 						<div id="Question_Img" style="display: none;"></div>
-						<div id="Question_Txt" style="color:black; font-size: 14px; display:block;">* 필수입력 사항입니다</div>
-						<input type="text" id="Question" class="Text_style" placeholder="질문내용을 입력하세요." onkeyup="Detect_Str('Question')" style="display:block;">
-						<h4 id="Question_Default" style="font-weight: bold; padding: 3px; color: gray;background-color: lightgray; display:none;">기본값 입니다.</h4>
-						<input type="image" id="Question_ImgBtn" class="ImgBtn_style" value="사진 추가하기" src="./img/icons/imgBtn.png" onclick="document.all.Question_file.click()">
+						<div id="Question_Txt" style="color:black; font-size: 14px;">* 필수입력 사항입니다</div>
+						<input type="text" id="Question" class="Text_style" placeholder="질문내용을 입력하세요." onkeyup="Detect_Str('Question')">
+						<input type="image" class="ImgBtn_style" value="사진 추가하기" src="./img/icons/imgBtn.png" onclick="document.all.Question_file.click()">
 						<input type="file" id="Question_file"accept="image/*" style="display: none;" onchange="loadFile(this, 'Question')">	
 					</div>
 					

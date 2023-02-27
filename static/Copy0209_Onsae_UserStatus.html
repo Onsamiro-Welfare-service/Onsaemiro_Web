@@ -24,19 +24,19 @@
 					</li>
 
 					<li class="sidebar-item active">
-						<a class="sidebar-link" href="http://onsaemiro.website/main"> <!-- 여기 -->
+						<a class="sidebar-link" href="http://144.24.81.201/main"> <!-- 여기 -->
 							 <span class="align-middle">메인</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="http://onsaemiro.website/create_question"> <!-- 여기 -->
+						<a class="sidebar-link" href="http://144.24.81.201/create_question"> <!-- 여기 -->
 							 <span class="align-middle">질문</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="http://onsaemiro.website/user_requirement"> <!-- 여기 -->
+						<a class="sidebar-link" href="http://144.24.81.201/user_requirement"> <!-- 여기 -->
 							 <span class="align-middle">도움 요청 확인</span>
 						</a>
 					</li>
@@ -46,7 +46,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="http://onsaemiro.website/privacy"> <!-- 여기 -->
+						<a class="sidebar-link" href="http://144.24.81.201/privacy"> <!-- 여기 -->
 							 <span class="align-middle">개인정보처리방침</span>
 						</a>
 					</li>
@@ -87,53 +87,30 @@
 					<input type="button" id="Add_NewProfile" value="프로필 추가하기" onclick="Add_Profile()">
 					<div id="Profile_Div" class="row">
 						<!-- 여기에 프로필 생길 예정 -->
-						<!-- <div id="user1" style="width: 320px; height: 270px;" onclick="onClick('사용자test')">
+						<!-- div id="user1" style="width: 300px; height: 270px;" onclick="onClick('사용자test')">
 							<div class="card flex-fill w-100">
 								<div class="card-header">
-									<h5 class="card-title mb-0" style="display:inline-block; color: black; font-size:20px; ">강지훈</h5>	
-									<h5 class="card-title mb-0" style="display:inline-block;  margin-left: 130px; color: gray; font-size:17px; ">B7230</h5>	
+									<h5 class="card-title mb-0" style="color: black; font-size:20px; ">강지훈</h5>	
 								</div>
-								
-								<div class="card-body d-flex" style="padding-top: 0; ">
+								<div class="card-body d-flex">
 									<div class="align-self-center w-100">
-										<img src="http://13.209.212.43/load/rn_image_picker_lib_temp_dc0caf5d-a8c8-48ca-9868-9d18021b58e4.jpg" style="width: 100px; height: 100px; border-radius:100px; margin-left: 30%">
-										<table class="table mb-0" style="margin-top: 15px;">
-											
+
+										<table class="table mb-0">
 											<tbody>
 												<tr>
 													<td>생년월일</td>
 													<td class="text-end">1999-10-01</td>
 												</tr>
-												<tr>
+												< <tr>
 													<td>주소</td>
-													<td class="text-end">경기도 수원시 영통구 매탄3동 위브하늘채 102-1504</td>
-												</tr>
+													<td class="text-end">경기도 수원시 영통구</td>
+												</tr>>
 										</table>
 									</div>
 								</div>
 							</div>
-						</div> -->
-						<!-- 
-								<div id="User0" style="width: 300px; height: 270px;" onclick="onClick(`B7230`)">
-									<div class="card flex-fill w-100">
-										<div class="card-header">
-											<h5 class="card-title mb-0" style="color: black; font-size:20px;">dfds</h5>
-										</div>
-										<div class="card-body d-flex">
-											<div class="align-self-center w-100">
-												<table class="table mb-0">
-													<tbody id="User0_tbody">
-														<tr>
-															<td>생년월일</td>
-															<td>2023-01-03</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-							-->
+								
+						</div-->
 						
 						<!-- 여기에 프로필 생길 예정 -->
 					</div>
@@ -146,8 +123,7 @@
 	</div>
 	<div id="Add_Profile_bg" class="profile_black_bg" style="display: none;"></div>
 	<div id="Add_Profile_wrap" class="profile_modal_wrap" style="display: none;">
-		<!-- 새로운 사용자 프로필 사진 등록파트 -->
-		<div style="width: 548px; height: 200px; margin: 25px 25px 15px 25px;">
+		<!-- <div style="width: 548px; height: 200px; margin: 25px 25px 15px 25px;">
 			<div class="container">
 				<div class="image-upload" id="image-upload">
 					<div style="width: 300px; height: 150px;" >
@@ -158,15 +134,16 @@
 					<form method="post" enctype="multipart/form-data">
 						<div class="button">
 							<label for="chooseFile">
-								<img id="Picture_AddBtn" src="./img/icons/imgBtn.png" style="background-color:white;">
+								<img id="Picture_AddBtn" src="../src/img/icons/add-file.png">
 							</label>
 						</div>
 						<input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
 					</form>
 				</div>
+				
+				
 			</div>
-		</div>
-		<!-- 새로운 사용자 프로필 상세정보 등록파트 -->
+		</div> -->
 		<div style="width: 548px; height: 270px; margin: 25px;">
 			<table class="table mb-0">
 				<tbody>
@@ -190,13 +167,10 @@
 					</tr>	
 			</table>
 		</div>
-		<!-- 새로운 사용자 프로필 저장&취소 버튼 -->
 		<div style="width: 548px; height: 70px; margin-left: 25px; margin-top: 15px;">
 			<input type="button" class="Profile_SaveBtn" value="저장하기" onclick="saveBtn()">
 			<input type="button" class="Profile_CancelBtn" value="취소하기" onclick="cancelBtn()">
 		</div>
-
-
 	</div>
 	<div id="UserStatus_modal_bg" class="black_bg" style="display: none;"></div>
 	<div id="UserStatus_modal_wrap" class="modal_wrap" style="display: none;">

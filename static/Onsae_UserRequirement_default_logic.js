@@ -153,10 +153,10 @@ function Create_User_requirement(Obj){//생성되는 항목에 값 넣기
         body.setAttribute('class', 'Requirement_body_style');
         
             let Times = document.createElement('div');
-            let createdTime = document.createTextNode('생성시간: ' + Obj.date);
+           // let createdTime = document.createTextNode('생성시간: ' + Obj.date);
             Times.setAttribute('id', eval("'Requirement" + List_index + "_createdTime'"));
-            Times.setAttribute('style', 'font-weight: bold; margin:8px;');   
-            Times.appendChild(createdTime);
+            Times.setAttribute('style', 'font-weight: bold; margin:8px; height:10px;');   
+            //Times.appendChild(createdTime);
             body.appendChild(Times);
             
             if(Obj.is_photo){//있다면 true
@@ -166,7 +166,7 @@ function Create_User_requirement(Obj){//생성되는 항목에 값 넣기
                 Img.setAttribute('class', 'body_ImgDiv_style');
                     let Img_src = document.createElement('img');
                     Img_src.setAttribute('src', eval("'" + Obj.photo + "'"));
-                    Img_src.setAttribute('style', 'width: 100%; height: auto;');
+                    Img_src.setAttribute('style', 'width: auto; height: 100%;');
                     Img.appendChild(Img_src);
                 body.appendChild(Img);
             } else {//없다면
@@ -220,12 +220,13 @@ if(document.getElementById("RequirementList").children.length == 0){//아무값�
 function Delete_New_requirement(){//새로운 데이터 로드시 갱신
     if(NewRequirementList.length > UserRequirementList.length){
         Request_UserList_Api();//사용자리스트 불러오기
-        if(UserRequirementList.length == 1){
-            let error = document.getElementsByClassName("header_usrid_style")[0].innerText;
-            if(error == "Error Code: 404 Not Found"){
+        //let is_exist = document.getElementById("RequirementList").children.lenght;
+		if(UserRequirementList[0].id == "Error Code: 404 Not Found"){
+           // let error = document.getElementsByClassName("header_usrid_style")[0].innerText;
+           // if(error == "Error Code: 404 Not Found"){
                 document.getElementById("RequirementList").innerHTML = "";
                 UserRequirementList = [];
-            }
+           // }
         }
 
         for(let i=UserRequirementList.length; i < NewRequirementList.length; i++){
@@ -248,7 +249,7 @@ async function Request_UserRequirement_Api(){//사용자 요구사항 리스트 
 		console.log(error);
 		alert('ERROR!');
 	})
-	await axios.get('http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_user_list', {params : {
+	await axios.get('http://13.209.212.43/api/get_user_list', {params : {
 		id : manager_id
 	}})
 	.then(function(response){
@@ -259,7 +260,7 @@ async function Request_UserRequirement_Api(){//사용자 요구사항 리스트 
 		console.log(err);
 		alert('ERROR');
 	});
-	await axios.get('http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_user_list_all', {params: {
+	await axios.get('http://13.209.212.43/api/get_user_list_all', {params: {
 		id : manager_id
 	}})
 	.then(function(response){
@@ -272,7 +273,7 @@ async function Request_UserRequirement_Api(){//사용자 요구사항 리스트 
 	});
 	for(i = 0; i<user_id_list.length; i++){
 		console.log(user_id_list[i]);
-		await axios.get('http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_request', {params : {
+		await axios.get('http://13.209.212.43/api/get_request', {params : {
 			id : user_id_list[i].id
 		}})
 		.then(function(response){
@@ -303,7 +304,7 @@ async function Request_UserList_Api(){
 	.then(function(response){
 		manager_id = response.data;
 	})
-	await axios.get('http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_user_list_all',{params:{
+	await axios.get('http://13.209.212.43/api/get_user_list_all',{params:{
 		id : manager_id
 	}})
 	.then(function(response){
@@ -315,7 +316,7 @@ async function Request_UserList_Api(){
 
 }
 Request_UserList_Api();//사용자리스트 불러오기
-
+Request_UserRequirement_Api();
 //콘텐트 생성 및 데이터 관련 함수
 function Search_UserName(id){
     // let getData = localStorage.getItem("UserList");
@@ -323,13 +324,15 @@ function Search_UserName(id){
     let is_find = "이름을 찾지 못했습니다";
     if(UserList.length != 0){
     UserList.forEach((elem, index) => {
-        let FindVal = elem.User_Id;
-        if(FindVal.indexOf(id) != -1){//값을 찾는다면 리턴
-            is_find = UserList[index].Name;
+        let FindVal = elem.id;
+		//console.log(elem);
+		//console.log(FindVal);
+        if(FindVal == id){//값을 찾는다면 리턴
+            is_find = UserList[index].name;
         }
     });
     }
     return is_find;//이름값을 찾는다면 "이름", 못찾는다면 "404" 리턴
 }
 
-setInterval(() => Request_UserRequirement_Api(), 6000);//1분마다 사용자 요구사항 받아오게끔
+setInterval(() => Request_UserRequirement_Api(), 60000);//1분마다 사용자 요구사항 받아오게끔

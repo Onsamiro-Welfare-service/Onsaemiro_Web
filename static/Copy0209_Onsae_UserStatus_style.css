@@ -23,12 +23,12 @@
 .profile_modal_wrap{
     display: none;
     width: 600px;
-    height: 630px;
+    height: 400px;
     position: absolute;
-    top: 45%;
+    top: 55%;
     left: 50%;
     margin: -250px 0 0 -250px;
-    background: #eee;
+    background:#eee;
     z-index: 2;
 }
 .profile_black_bg{

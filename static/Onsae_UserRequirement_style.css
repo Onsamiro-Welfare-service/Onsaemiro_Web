@@ -21,6 +21,8 @@
 .header_usrid_style {
     font-size: 15px; 
     font-weight: bold;
+	margin-left: 4px;
+	margin-right:3px;
 }
 .header_icon_style {
     float:right; 
@@ -48,10 +50,9 @@
 .Requirement_body_style::-webkit-scrollbar {
     display: none;
 }
-.body_ImgDiv_style {
-    border: 2px solid orange; 
+.body_ImgDiv_style { 
     width: 890px;
-    height: auto; 
+    height: 400px; 
     margin-left: 50px; 
     text-align: center;
 }

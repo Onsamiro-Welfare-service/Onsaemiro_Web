@@ -1,10 +1,18 @@
 var LoginAccess = 1;//서버에서 
 var ServerValue = "SDBG0112";//서버에서 받아오는 매니저 아이디값 저장 
-function login(){//로그인 버튼을 누르면 입력된 값을 받아오는 함수
+async function login(){//로그인 버튼을 누르면 입력된 값을 받아오는 함수
     let ID = document.getElementById('Admin_Id').value;
     let PW = document.getElementById('Admin_Code').value;
     console.log("사용자 아이디: " + ID + "인증번호는: " + PW);
-    
+   	await axios.post('http://onsaemiro.website/process/login',{
+        id :ID,
+        password : PW
+    }).then(function(response){
+		LoginAccess = response.data;
+	}).catch(function(err){
+		console.log(err);
+		alert('ERROR!');
+	});
     if(is_Blank('Admin_Id') && is_Blank('Admin_Code')){
         //서버에 ID, Password 값 보내서 요청
         //리턴값 LoginAccess에 저장 
@@ -14,7 +22,7 @@ function login(){//로그인 버튼을 누르면 입력된 값을 받아오는 �
                 document.getElementById('Admin_Id').style.borderColor = "red";
                 break;
             case 1://로그인성공
-                location.href= "./Onsae_Main_page.html";
+                location.href= "http://onsaemiro.website";
                 break;
             case 2://비밀번호 틀림
                 alert("비밀번호가 틀렸습니다.");
@@ -35,11 +43,12 @@ function login(){//로그인 버튼을 누르면 입력된 값을 받아오는 �
     }
 }
 
-function signUp(){
+async function signUp(){
     let Name = document.getElementById('name').value;
     let Belong = document.getElementById('company').value;
     let Phone = document.getElementById('phone_Num').value;
     let Address = document.getElementById('Address').value;
+	let Password = document.getElementById('password').value;
 
 
     if(is_Blank('name') && is_Blank('company') && is_Blank('phone_Num') && is_Blank('Address') && PasswordCheck()){
@@ -48,9 +57,21 @@ function signUp(){
             console.log("소속: " + Belong);
             console.log("휴대전화: " + Phone);
             console.log("주소: "+ Address);
+			console.log("비밀번호: " + Password);
+			await axios.post('http://apionsaemiro.site/api/manager_register', {
+				name : Name,
+				password : Password,
+				belong : Belong,
+				phone_number : Phone,
+				address : Address
+			})
+			.then(function(response){
+				ServerValue = response.data;
+			})
+
             //Console.log 자리에 서버와 통신
             if(confirm("생성된 매니저 아이디는 " + ServerValue + "입니다. 로그인하시겠습니까?")){
-                location.href= "./Onsae_Main_page.html";
+                location.href= "http://onsaemiro.website";
             }
             
         }

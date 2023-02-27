@@ -50,7 +50,7 @@ async function Request_API(category){//Request_API("DL");
     let ReturnVal = [];// 받아온 값 ReturnVal에 할당 
  await axios
     .get(
-      "http://apionsaemiro.site/api/load_question",{
+      "http://13.209.212.43/api/load_question",{
 		params :{
 			category:category,
 			
@@ -94,15 +94,6 @@ async function Request_API(category){//Request_API("DL");
             console.log("Error Code 404");
     }
 }
-
-function show_Answer(div){//질문리스트에서 답변항목 볼수 있게 토글
-    console.log("실행");
-    let con = document.getElementById(div);
-    if(con.style.display == "block")
-        con.style.display = "none";
-    else 
-        con.style.display = "block";
-}
 function create_QuestionList(category){//create_QuestionList("Safe")
     let parent = document.getElementById("QuestionList");
     let categoryIcon_color, categoryIcon_txt;//생성할 항목의 카테고리 속성
@@ -136,14 +127,6 @@ function create_QuestionList(category){//create_QuestionList("Safe")
         child.setAttribute('id', eval("'" + QuestionList_Arr[i].code + "'"));//질문코드가 id
         child.setAttribute('class', 'Question_Style');
         child.setAttribute('name', eval("'" + category + "'"));
-        child.setAttribute('onclick', eval("'show_Answer(`" + QuestionList_Arr[i].code + "_Answer`)'" ));
-            let closeBtn = document.createElement('input');
-            closeBtn.setAttribute('type', 'button');
-            closeBtn.setAttribute('value', 'X');
-            closeBtn.setAttribute('class', 'Question_CloseBtn');
-            closeBtn.setAttribute('onclick', eval("'QuestionClose(`" + QuestionList_Arr[i].code + "`)'"));
-            child.appendChild(closeBtn);
-        
             let Icon = document.createElement('span');
             let IconText = document.createTextNode(categoryIcon_txt);
             Icon.setAttribute('class', 'category_Icon');
@@ -152,72 +135,18 @@ function create_QuestionList(category){//create_QuestionList("Safe")
             child.appendChild(Icon);
 
             let QuestionContent = document.createElement('span');
-            let QuestionContent_Text;
-			if(QuestionList_Arr[i].type == '0'){
-				QuestionContent_Text = document.createTextNode("사용자 신체관련 질문입니다.");
-			}else if(QuestionList_Arr[i].type == '1'){
-				QuestionContent_Text = document.createTextNode("슬라이드 형식 질문입니다.");
-			}else {
-				QuestionContent_Text = document.createTextNode(QuestionList_Arr[i].question);
-			}
-			QuestionContent.setAttribute('class', 'QuestionText');
+            let QuestionContent_Text = document.createTextNode(QuestionList_Arr[i].question);
+            QuestionContent.setAttribute('class', 'QuestionText');
             QuestionContent.appendChild(QuestionContent_Text);
             child.appendChild(QuestionContent);
 
-            let enter = document.createElement('br');
-            child.appendChild(enter);
-
-            //질문리스트에서 해당 답변 항목 생성 파트
-            let AnswerDiv = document.createElement('div');
-            AnswerDiv.setAttribute("id", eval("'" + QuestionList_Arr[i].code + "_Answer'"));
-            AnswerDiv.setAttribute("style", "display: none;");
-            let AnswerCount = 0, Answer_arr = [];
-            switch(QuestionList_Arr[i].type){
-                case "0":
-                    AnswerCount = -1;
-                    break;
-                case "1":
-                    AnswerCount = -2;
-                    break;
-                case "2":
-                    AnswerCount = 2; 
-                    Answer_arr = ["a2","a1"];
-                    break;
-                case "3":
-                    AnswerCount = 3;
-                    Answer_arr = ["a3","a2","a1"];
-                    break;
-                case "4":
-                    AnswerCount = 4;
-                    Answer_arr = ["a4","a3","a2","a1"];
-                    break;
-            }
-            if(AnswerCount > 0){//답변타입 2항/3항/4항
-                let AnswerObj = JSON.parse(QuestionList_Arr[i].option);
-                for(let p=1; p <= AnswerCount; p++){
-                    let AnswerText = document.createElement('div');
-                    let AnswerText_val = document.createTextNode('o 답변' + p + ': ' + AnswerObj[Answer_arr.pop()]);//각각의 답변값들
-                    AnswerText.setAttribute('class', 'AnswerText');
-                    AnswerText.appendChild(AnswerText_val);
-                    AnswerDiv.appendChild(enter);
-                    AnswerDiv.appendChild(AnswerText);
-                }
-            } else {//답변타입 신체/슬라이드
-                let Default_Answer = document.createElement('div');
-                Default_Answer.setAttribute('class', 'AnswerText');
-				if(AnswerCount == -1){
-                    let Default_Answer_text1 = document.createTextNode('(기본값)사용자 신체관련 질문입니다.');
-                    Default_Answer.appendChild(Default_Answer_text1); 
-                } else if(AnswerCount == -2){
-                    let Default_Answer_text2 = document.createTextNode('(기본값)사용자 슬라이드 질문입니다.');
-                    Default_Answer.appendChild(Default_Answer_text2); 
-                } else {
-                    console.log("Error 404: Not Found : function create_QuestionList() >> Answer Value is None");
-                }
-                AnswerDiv.appendChild(enter);
-                AnswerDiv.appendChild(Default_Answer);
-            }
-            child.appendChild(AnswerDiv);
+		    let closeBtn = document.createElement('input');
+		    closeBtn.setAttribute('type', 'button');
+		    closeBtn.setAttribute('value', 'X');
+		    closeBtn.setAttribute('style', 'border:none;float:right; background-color:transparent;font-size: 20px; font-weight:bold;');
+		    closeBtn.setAttribute('class', 'Question_CloseBtn');
+		    closeBtn.setAttribute('onclick', eval("'QuestionClose(`" + QuestionList_Arr[i].code + "`)'"));
+		    child.appendChild(closeBtn);
         parent.appendChild(child);
     }
     is_Empty();
@@ -227,7 +156,7 @@ async function QuestionClose(id){
 	if(confirm("질문을 삭제하시겠습니까?")){
 		document.getElementById(id).style.display = "none";
 		console.log(id);
-		await axios.post("http://apionsaemiro.site/api/delete_question",{
+		await axios.post("http://13.209.212.43/api/delete_question",{
 			code:id
 		}).then((response) => {
      	 if (response) {
@@ -392,11 +321,8 @@ function QuestionType(){//선택한 항목에 따라 div 생성
     let AnswerList = document.getElementById("AnswerList_body");
     AnswerList.innerHTML = "";
     switch(TypeVal){
-        case "0":
-            create_Default_Slide(AnswerList);
-            break;
         case "1":
-            create_Default_Slide(AnswerList);
+            create_Slide(AnswerList);
             break;
         case "2":
             create_Select(AnswerList, 2);
@@ -413,43 +339,26 @@ function QuestionType(){//선택한 항목에 따라 div 생성
 }
 
 //답변칸 생성
-// function create_Slide(parent){
-//     let child = document.createElement('div');
-//         let Txt = document.createElement('div');
-//         let Txt_str = document.createTextNode("* 필수입력 사항입니다");
-//         Txt.setAttribute('id', 'Answer0_Txt');
-//         Txt.setAttribute('style', 'color:black; font-size: 14px;');
-//         Txt.appendChild(Txt_str);
-//         child.appendChild(Txt);
-//         let Answer = document.createElement('input');
-//         Answer.setAttribute('type', 'text');
-//         Answer.setAttribute('id', 'Answer0');
-//         Answer.setAttribute('class', 'Text_style');
-//         Answer.setAttribute('placeholder', '답변내용을 입력하세요.');
-//         Answer.setAttribute('onkeyup', 'Detect("Answer0")');
-//         child.appendChild(Answer);
-//     parent.appendChild(child);
-// }
-
-function create_Default_Slide(parent){
-    //document.getElementById("Question_Txt").style.display = "none";
-    //document.getElementById("Question").style.display = "none";
-    //document.getElementById("Question_ImgBtn").style.display = "none";
-    //document.getElementById("Question_Default").style.display = "block";
-
-    let child = document.createElement('h4');
-    child.setAttribute('style', 'font-weight: bold; padding: 3px; color: gray;background-color: lightgray;');
-    let child_txt = document.createTextNode('기본값 입니다.');
-    child.appendChild(child_txt);
+function create_Slide(parent){
+    let child = document.createElement('div');
+        let Txt = document.createElement('div');
+        let Txt_str = document.createTextNode("* 필수입력 사항입니다");
+        Txt.setAttribute('id', 'Answer0_Txt');
+        Txt.setAttribute('style', 'color:black; font-size: 14px;');
+        Txt.appendChild(Txt_str);
+        child.appendChild(Txt);
+        let Answer = document.createElement('input');
+        Answer.setAttribute('type', 'text');
+        Answer.setAttribute('id', 'Answer0');
+        Answer.setAttribute('class', 'Text_style');
+        Answer.setAttribute('placeholder', '답변내용을 입력하세요.');
+        Answer.setAttribute('onkeyup', 'Detect("Answer0")');
+        child.appendChild(Answer);
     parent.appendChild(child);
 }
 
 function create_Select(parent, index){
-    //document.getElementById("Question_Txt").style.display = "block";
-    //document.getElementById("Question").style.display = "block";
-    //document.getElementById("Question_ImgBtn").style.display = "block";
-    //document.getElementById("Question_Default").style.display = "none";
-    for(let i=1;i<= index; i++){
+    for(let i=0;i< index; i++){
         let child = document.createElement('div');
             let Img = document.createElement('div');
             Img.setAttribute('id', eval("'Answer" + i + "_Img'"));
@@ -467,13 +376,13 @@ function create_Select(parent, index){
             Answer.setAttribute('id', eval("'Answer" + i + "'"));
             Answer.setAttribute('class', 'Text_style');
             Answer.setAttribute('placeholder', '답변내용을 입력하세요.');
-            Answer.setAttribute('onkeyup', eval("'Detect_Str(`Answer" + i + "`)'"));
+            Answer.setAttribute('onkeyup', eval("'Detect(`Answer" + i + "`)'"));
             child.appendChild(Answer);
             let ImgBtn = document.createElement('input');
             ImgBtn.setAttribute('type', 'image');
             ImgBtn.setAttribute('class', 'ImgBtn_style');
             ImgBtn.setAttribute('value', '사진 추가하기');
-            ImgBtn.setAttribute('src', './img/icons/imgBtn.png');
+            ImgBtn.setAttribute('src', '../src/img/icons/imgBtn.png');
             ImgBtn.setAttribute('onclick', eval("'document.all.Answer" + i + "_file.click()'"));
             child.appendChild(ImgBtn);
             let file = document.createElement('input');
@@ -585,10 +494,8 @@ async function Create_Question(){//생성하기를 누르면 입력된 정보 �
     Request_API_Obj.type = type;//문제유형
     Request_API_Obj.question = document.getElementById("Question").value;//질문내용
     switch(type){
-        case "0"://기본값으로 인한 답 가져오기 생략 사진값 한개만 존재 
-            break;
-        case "1"://기본값으로 인한 답 가져오기 생략 사진값 한개만 존재
-            //Answer_Obj.a1 = document.getElementById("Answer1").value;
+        case "1":
+            Answer_Obj.a1 = document.getElementById("Answer1").value;
             break;
         case "2":
             Answer_Obj.a1 = document.getElementById("Answer1").value;
@@ -606,17 +513,22 @@ async function Create_Question(){//생성하기를 누르면 입력된 정보 �
             Answer_Obj.a4 = document.getElementById("Answer4").value;
             break;
     }
-    console.log(Answer_Obj);
 
     Request_API_Obj.option = Answer_Obj;//답변내용
     let Photo_Obj = { q: "", a1: "", a2: "", a3: "", a4: ""};
-    Photo_Obj.q = await Post_Img(document.getElementById("Question_file").files[0]);//질문내용 
-
+    Photo_Obj.q = await Post_Img(document.getElementById("Question_file").files[0]);//질문내용 사진값
+    // let Answer_Count = document.getElementById("AnswerList_body").children.length;
+    // for(let i=0;i< Answer_Count;i++){
+    //     let AnswerImg = document.getElementById("Answer" + i + "_Img");
+    //     if(AnswerImg.children.length > 0){//사진값이 있는지 확인
+    //         AnswerArr.push(Post_Img(AnswerImg.children[0].src));//질문칸에 넣어진 사진데이터를 링크화해서 넣기
+    //     }
+    // }
     switch(type){
         case "2":
             for(let i=1;i<= 2;i++){
                 let AnswerImg = document.getElementById("Answer" + i + "_file");
-               //if(AnswerImg.children.length > 0){//사진값이 있는지 확인
+               // if(AnswerImg.children.length > 0){//사진값이 있는지 확인
                     if(i == 1){
                         Photo_Obj.a1 = await Post_Img(AnswerImg.files[0]);//질문내용 이미지 링크값 가져오기
                     	console.log(Photo_Obj.a1)
@@ -630,41 +542,37 @@ async function Create_Question(){//생성하기를 누르면 입력된 정보 �
         case "3":
             for(let i=1;i<= 3;i++){
                 let AnswerImg = document.getElementById("Answer" + i + "_file");
-                //if(AnswerImg.children.length > 0){//사진값이 있는지 확인
+                if(AnswerImg.children.length > 0){//사진값이 있는지 확인
                     if(i == 1){
                         Photo_Obj.a1 = await Post_Img(AnswerImg.files[0]);
                     } else if(i == 2){
-                        Photo_Obj.a2 = await Post_Img(AnswerImg.files[0]);
+                        Photo_Obj.a2 =await Post_Img(AnswerImg.files[0]);
                     } else if(i == 3){
-                        Photo_Obj.a3 = await Post_Img(AnswerImg.files[0]);
+                        Photo_Obj.a3 =await Post_Img(AnswerImg.files[0]);
                     }
-                //}
+                }
             }
             break;
         case "4":
-            for(let i=1;i<=4;i++){   
-			console.log("for루프 실행");
+            for(let i=1;i<=3;i++){    
 			let AnswerImg = document.getElementById("Answer" + i + "_file");
-                //if(AnswerImg.children.length > 0){//사진값이 있는지 확인
-					console.log("사진값 체크");
-                    if(i == 1){console.log("답변1 올리기");
-                        Photo_Obj.a1 = await Post_Img(AnswerImg.files[0]); console.log(Photo_Obj.a1);
+                if(AnswerImg.children.length > 0){//사진값이 있는지 확인
+                    if(i == 1){
+                        Photo_Obj.a1 = await Post_Img(AnswerImg.files[0]);
                     } else if(i == 2){
-                        Photo_Obj.a2 = await Post_Img(AnswerImg.files[0]); console.log(Photo_Obj.a2);
+                        Photo_Obj.a2 =await Post_Img(AnswerImg.files[0]);
                     } else if(i == 3){
-                        Photo_Obj.a3 = await Post_Img(AnswerImg.files[0]); console.log(Photo_Obj.a3);
+                        Photo_Obj.a3 =await Post_Img(AnswerImg.files[0]);
                     } else if(i == 4){
-                        Photo_Obj.a4 = await Post_Img(AnswerImg.files[0]); console.log(Photo_Obj.a4);
+                        Photo_Obj.a4 =await Post_Img(AnswerImg.files[0]);
                     }
-                //}
+                }
             }
             break;
-    
-	}
-
+    }
     Request_API_Obj.photo = Photo_Obj;
-	
-    console.log(Request_API_Obj); alert("질문이 생성되었습니다!");
+
+    console.log(Request_API_Obj);
     Request_API_Question(Request_API_Obj);
    	closeModal();
 	location.reload();
@@ -680,7 +588,7 @@ async function Post_Img(Img_file){//이미지 파일 업로드
     const formData = new FormData();
     formData.append("photo", uploadFile);
 
-    await axios.post("http://apionsaemiro.site/api/upload_photo",formData,
+    await axios.post("http://13.209.212.43/api/upload_photo",formData,
 		  	{
 			redirect: 'follow',
             headers: {
@@ -720,10 +628,13 @@ async function Post_Img(Img_file){//이미지 파일 업로드
   // http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/upload_photo
   // 리턴값 -> 사진 링크
   return imageurl;
+
+   // console.log(Img_file);
+	//return Img_file + "";
 }
 
 async function Request_API_Question(data){//새로운 질문 Post
-	await axios.post('http://apionsaemiro.site/api/create_question', {
+	await axios.post('http://13.209.212.43/api/create_question', {
 		category:data.category,
 		type:data.type,
 		question:data.question,

@@ -1,86 +1,104 @@
-//사용자 정보확인창(modal)의 문진표 요청 및 결과 정보 표시 담당
-/* 
-
-//질문지 하나 = {
-  time: "기록된 시간",
-  title: "문진표 제목",
-  Category_H: ["질문내용", "답변"],["질문내용", "답변"],["질문내용", "답변"]
-  Category_S: ["질문내용", "답변"],["질문내용", "답변"],["질문내용", "답변"]
-  Category_DL:["질문내용", "답변"],["질문내용", "답변"],["질문내용", "답변"]
-  Category_M: ["질문내용", "답변"],["질문내용", "답변"],["질문내용", "답변"]
-}
-
-답변 불러오기:get
-https://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_answer
-{
-    "id" : "dd", <- 사용자 ID(조회하고자 하는)
-    "date" : "2023-1-13", <- 조회하고자 하는 날짜 (형식: YYYY:M(한자리일 경우 앞에 0 안붙임):D(똑같이 앞에 0 안붙임)
-    "category": "DL"
-}
-
-이걸로 요청하면
-
-
-{
-     DL_str: [[질문내용, 답변내용][질문내용, 답변내용]] ,
-    H_str:  [[질문내용, 답변내용][질문내용, 답변내용]] ,
-    M_str: [[질문내용, 답변내용][질문내용, 답변내용]] ,
-   S_str: [[질문내용, 답변내용][질문내용, 답변내용]] 
-}
-*/
 var Category_DL_Arr = [
   ["DL질문1", "DL답변1"],
   ["DL질문2", "DL답변2"],
   ["DL질문3", "DL답변3"],
   ["DL질문4", "DL답변4"]
 ];
+var Category_DL_Q = [];
+var Category_DL_A = [];
 var Category_S_Arr = [
   ["S질문1", "S답변1"],
   ["S질문2", "S답변2"],
   ["S질문3", "S답변3"],
   ["S질문4", "S답변4"]
 ];
+var Category_S_Q =[];
+var Category_S_A = [];
 var Category_M_Arr = [
   ["M질문1", "M답변1"],
   ["M질문2", "M답변2"],
   ["M질문3", "M답변3"],
   ["M질문4", "M답변4"]
 ];
+var Category_M_Q =[];
+var Category_M_A = [];
 var Category_H_Arr = [
   ["H질문1", "H답변1"],
   ["H질문2", "H답변2"],
   ["H질문3", "H답변3"],
   ["H질문4", "H답변4"]
 ];
+var Category_H_Q = [];
+var Category_H_A = [];
 
 
 
-function RequestData(UserId){//리퀘스트 값
+async function RequestData(UserId){//리퀘스트 값
+  Category_DL_Arr = [];
+  Category_S_Arr = [];
+  Category_M_Arr = [];
+	Category_H_Arr = [];
   console.log('실행');
   let Today_Date = RequestTime();//날짜값
-  let Api_Obj = new Object();
+ let Api_Obj = new Object();
   Api_Obj.id = UserId;
-  Api_Obj.date = Today_Date;
+  let date_val = document.getElementById("Modal_bar_date").value;
+  let date_arr = date_val.split("-");
+  let final_date = date_arr[0] + "-" + Number(date_arr[1]) + "-" + Number(date_arr[2]);
+  Api_Obj.date = final_date; 
   Api_Obj.category = "DL";//DL S H M
-  Request_UserStatus_Api(Api_Obj);
+  DL = await Request_UserStatus_Api(Api_Obj);
+	if(DL != null){
+	Category_DL_Q = Object.values(DL.question);
+  	Category_DL_A = Object.values(DL.answer);
+  	for(i = 0; i<Category_DL_Q.length; i++){
+	 	 var temp = [Category_DL_Q[i],Category_DL_A[i]];
+	 	 Category_DL_Arr.push(temp);
+ 	 }
+}
   //Category_DL_Arr = 받아오는 데이터
 
   Api_Obj.category = "S";
-  Request_UserStatus_Api(Api_Obj);
+  var S = await Request_UserStatus_Api(Api_Obj);
+  	if(S != null){
+	Category_S_Q = Object.values(S.question);
+	Category_S_A = Object.values(S.answer);
+  for(i = 0; i<Category_S_A.length; i++){
+	  var temp = [Category_S_Q[i], Category_S_A[i]];
+	  Category_S_Arr.push(temp);
+  }
+	}
   //Category_S_Arr = 받아오는 데이터
 
   Api_Obj.category = "H";
-  Request_UserStatus_Api(Api_Obj);
+  var H = await Request_UserStatus_Api(Api_Obj);
+	if(H != null){
+	Category_H_Q = Object.values(H.question);
+	Category_H_A = Object.values(H.answer);
+	for(i = 0; i<Category_H_A.length; i++){
+		var temp = [Category_H_Q[i], Category_H_A[i]];
+		Category_H_Arr.push(temp);
+	}
+	}
   //Category_H_Arr = 받아오는 데이터
 
   Api_Obj.category = "M";
-  Request_UserStatus_Api(Api_Obj);
+  var M = await Request_UserStatus_Api(Api_Obj);
+	console.log(M);
+	if(M != null){
+	Category_M_Q = Object.values(M.question);
+	Category_M_A = Object.values(M.answer);
+	for(i = 0; i<Category_M_A.length; i++){
+		var temp = [Category_M_Q[i], Category_M_A[i]];
+		Category_M_Arr.push(temp);
+	}
+}
   //Category_M_Arr = 받아오는 데이터
 
   setContent();
 }
 
-function Request_UserStatus_Api(Obj){
+async function Request_UserStatus_Api(Obj){
   console.log("문진표 조회하기" + Obj.id + " " + Obj.date + " " + Obj.category);
   /*답변 불러오기:get
   https://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/get_answer
@@ -90,6 +108,15 @@ function Request_UserStatus_Api(Obj){
     "category" : "DL" <-카테고리 코드
   }*/
   let Return_val = [""];// = 요청해서 받아온 값 할당
+	await axios.get('http://apionsaemiro.site/api/get_answer',{
+		params : {
+		id : Obj.id,
+		date : Obj.date,
+		category : Obj.category
+		}
+	}).then(function(response){
+		Return_val = response.data[0]
+	})	
   return Return_val;
 }
 
@@ -138,7 +165,7 @@ function DailyLifeSurvey(parent_val){//DL부분 만드는 함수 / 질의응답 
       let DL_title_str = document.createTextNode('일상');
       DL_title.setAttribute('id', 'Answer_DailyLifeDiv');
       DL_title.setAttribute('class', 'Category_Icon');
-      DL_title.setAttribute('style', 'border: 2px solid red; color: red;');
+      DL_title.setAttribute('style', 'border: 2px solid #fd7e14; color: #fd7e14;');
       DL_title.appendChild(DL_title_str);
       DLChild.appendChild(DL_title);
       for(let i=0;i< Category_DL_Arr.length; i++){//질문답변 배열 갯수에 맞춰 생성
@@ -169,7 +196,7 @@ function SafeSurvey(parent_val){//Safe부분 만드는 함수 / 질의응답 갯
       let S_title_str = document.createTextNode('안전');
       S_title.setAttribute('id', 'Answer_DailyLifeDiv');
       S_title.setAttribute('class', 'Category_Icon');
-      S_title.setAttribute('style', 'border: 2px solid red; color: red;');
+      S_title.setAttribute('style', 'border: 2px solid #FF2626; color: #FF2626;');
       S_title.appendChild(S_title_str);
       S_Child.appendChild(S_title);
       for(let i=0;i< Category_S_Arr.length; i++){//질문답변 배열 갯수에 맞춰 생성
@@ -200,7 +227,7 @@ function HealthSurvey(parent_val){//Health부분 만드는 함수 / 질의응답
       let H_title_str = document.createTextNode('건강');
       H_title.setAttribute('id', 'Answer_DailyLifeDiv');
       H_title.setAttribute('class', 'Category_Icon');
-      H_title.setAttribute('style', 'border: 2px solid red; color: red;');
+      H_title.setAttribute('style', 'border: 2px solid #007944; color: #007944;');
       H_title.appendChild(H_title_str);
       H_Child.appendChild(H_title);
       for(let i=0;i< Category_H_Arr.length; i++){//질문답변 배열 갯수에 맞춰 생성
@@ -231,7 +258,7 @@ function MindSurvey(parent_val){//Mind부분 만드는 함수 / 질의응답 갯
       let M_title_str = document.createTextNode('마음');
       M_title.setAttribute('id', 'Answer_DailyLifeDiv');
       M_title.setAttribute('class', 'Category_Icon');
-      M_title.setAttribute('style', 'border: 2px solid red; color: red;');
+      M_title.setAttribute('style', 'border: 2px solid #F35588; color: #F35588;');
       M_title.appendChild(M_title_str);
       M_Child.appendChild(M_title);
       for(let i=0;i< Category_M_Arr.length; i++){//질문답변 배열 갯수에 맞춰 생성
@@ -252,3 +279,4 @@ function MindSurvey(parent_val){//Mind부분 만드는 함수 / 질의응답 갯
     parent_val.appendChild(M_Child);//위에 생성된 모든 항목 부모요소에 편입
   }
 } 
+
