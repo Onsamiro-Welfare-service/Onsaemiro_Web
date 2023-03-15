@@ -81,7 +81,7 @@
     height: 35px;
     font-size: 25px;
     font-weight: bold;
-    margin-left: 10px;
+    margin-left: 25px;
     margin-top: 10px;
 }
 #Modal_body {
@@ -261,4 +261,24 @@
     overflow: hidden; 
     margin-left: 45px; 
     box-shadow: 5px 5px 5px ;
+}
+
+/* 공통 코드 */
+.Userprofile_btn {
+    width: 140px;
+    height: 45px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+/* 로그인코드 확인버튼 */
+.LoginCode_btn { 
+    margin-left: 20px;
+    /* background-color: #1cbb8c; */
+}
+/* 사용자 삭제 버튼 */
+.DeleteUser_btn {
+    float: right;
+    background-color: #ff5e6dcf;
+    margin-right: 55px;
 }

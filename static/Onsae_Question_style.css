@@ -135,7 +135,7 @@
 }
 
 /* 미리보기 화면 구성*/
-#phone_body {
+#phone_body {box-sizing: content-box;
     border: 1px solid black; 
     width: 400px; 
     height: 100%; 
@@ -143,13 +143,130 @@
     background-color: black; 
     margin-left: 25%;
 }
-#phone_screen {
+#phone_screen {box-sizing: content-box;
     width: 380px; 
     height: 90%; 
     background-color: white;
     margin-left: 9px; 
     margin-top: 25px;
+    padding-top: 1px;
 }
+#phone_interior {box-sizing: content-box;
+    width:360px; 
+    height:538px; 
+    margin:10px;
+}
+.Question_2Choice {box-sizing: content-box;
+    background-color: skyblue; 
+    border-radius:15px; 
+    width:340px; 
+    height: 300px; 
+    padding: 10px; 
+    margin-top: 10px;
+}
+.Question_3Choice {box-sizing: content-box;
+    background-color: skyblue; 
+    border-radius:15px; 
+    width:340px; 
+    height: 300px; 
+    padding: 10px;
+}
+.Question_4Choice {box-sizing: content-box;
+    background-color: skyblue; 
+    border-radius:15px; 
+    width:340px; 
+    height: 250px; 
+    padding: 10px;
+}
+.Question_img_2Choice {box-sizing: content-box;
+    border-radius: 20px; 
+    font-size: 18px; 
+    width: 240px; 
+    height: 240px; 
+    margin-left: 40px;
+}
+.Question_img_3Choice {box-sizing: content-box;
+    border-radius: 20px; 
+    font-size: 18px; 
+    width: 240px; 
+    height: 240px; 
+    margin-left: 40px;
+}
+.Question_img_4Choice {box-sizing: content-box;
+    border-radius: 20px; 
+    font-size: 18px; 
+    width: 200px; 
+    height: 200px; 
+    margin-left: 60px;
+}
+#Question_txt {box-sizing: content-box;
+    text-align: center; 
+    font-size: 18px; 
+    font-weight: bold;
+    overflow: hidden;
+}
+.Answer_2Choice_Style {box-sizing: content-box;
+    background-color: skyblue;
+    border-radius:15px; 
+    width: 156px; 
+    height: 188px; 
+    padding: 10px;
+    display:inline-block;
+    margin-left: 4px;
+}
+.Answer_3Choice_Style {box-sizing: content-box;
+    background-color: skyblue;
+    border-radius:15px; 
+    width: 95px; 
+    height: 188px; 
+    padding: 10px;
+    display:inline-block;
+    margin-left: 4px;
+}
+.Answer_4Choice_Style {box-sizing: content-box;
+    background-color: skyblue;
+    border-radius:15px; 
+    width: 166px; 
+    height: 120px; 
+    padding: 5px;
+    display:inline-block;
+    margin-left: 4px;
+    margin-top: 2px;
+}
+.Answer_img_2Choice {box-sizing: content-box;
+    border-radius: 20px; 
+    font-size: 18px; 
+    width: 150px; 
+    height: 150px;
+    margin-left: 4px;
+}
+.Answer_img_3Choice {box-sizing: content-box;
+    border-radius: 20px; 
+    font-size: 18px; 
+    width: 95px; 
+    height: 150px;
+}
+.Answer_img_4Choice {box-sizing: content-box;
+    border-radius: 20px; 
+    font-size: 18px; 
+    width: 100px; 
+    height: 100px; 
+    margin-left: 30px;
+}
+.Answer_txt_style1 {box-sizing: content-box;
+    text-align: center; 
+    font-size: 15px; 
+    font-weight: bold;
+    overflow: hidden;
+}
+.Answer_txt_style2 {box-sizing: content-box;
+    text-align: center; 
+    font-size: 13px; 
+    font-weight: bold;
+    overflow: hidden;
+}
+/* 미리보기 끝*/
+
 #Question_Screen {
     width: 370px; 
     height: 320px; 

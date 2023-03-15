@@ -17,7 +17,7 @@ var UserRequirement_LoadedArr = [];//이전 세션 데이터 불러오면 여기
 var Exp_Name = new RegExp("[가-힣]{2,4}");
 
 
-//창닫기 이벤트 감지& 기존 세션 데이터 저장
+/*//창닫기 이벤트 감지& 기존 세션 데이터 저장
 window.addEventListener('beforeunload', (event) => {
     //화면이 사라지기전 해당화면 상태값 모두 저장
     save_SessionData();
@@ -25,7 +25,7 @@ window.addEventListener('beforeunload', (event) => {
     event.preventDefault();
     // Chrome에서는 returnValue 설정이 필요함
     event.returnValue = '';
-});
+});*/
 
 //기본 웹에서 버튼 및 작동 관련 함수
 function toggleDiv(DivId){
@@ -242,15 +242,15 @@ async function Request_UserRequirement_Api(){//사용자 요구사항 리스트 
 	var temp = [];
 	await axios.get('/process/get_session_user')
 	.then(function(response){
-		manager_id = response.data;
-		console.log(manager_id)
+		manager_belong = JSON.stringify(response.data); 
+		console.log(manager_belong)
 	})
 	.catch(function(error){
 		console.log(error);
 		alert('ERROR!');
 	})
-	await axios.get('http://13.209.212.43/api/get_user_list', {params : {
-		id : manager_id
+	await axios.get('http://apionsaemiro.site/api/get_user_list', {params : {
+		belong : manager_belong
 	}})
 	.then(function(response){
 		user_id_list = Object.values(response.data);
@@ -260,8 +260,8 @@ async function Request_UserRequirement_Api(){//사용자 요구사항 리스트 
 		console.log(err);
 		alert('ERROR');
 	});
-	await axios.get('http://13.209.212.43/api/get_user_list_all', {params: {
-		id : manager_id
+	await axios.get('http://apionsaemiro.site/api/get_user_list_all', {params: {
+		belong : manager_belong
 	}})
 	.then(function(response){
 		UserList = response.data;
@@ -273,7 +273,7 @@ async function Request_UserRequirement_Api(){//사용자 요구사항 리스트 
 	});
 	for(i = 0; i<user_id_list.length; i++){
 		console.log(user_id_list[i]);
-		await axios.get('http://13.209.212.43/api/get_request', {params : {
+		await axios.get('http://apionsaemiro.site/api/get_request', {params : {
 			id : user_id_list[i].id
 		}})
 		.then(function(response){
@@ -300,11 +300,11 @@ async function Request_UserList_Api(){
     // { manager_id : "SD1111" }
     //console.log("Api로 사용자 리스트 all get 요청");
     //리턴값으로 사용자 정보가 오면 UserList에 저장
-	await axios.get('http://144.24.81.201/process/get_session_user')
+	await axios.get('http://onsaemiro.website/process/get_session_user')
 	.then(function(response){
 		manager_id = response.data;
 	})
-	await axios.get('http://13.209.212.43/api/get_user_list_all',{params:{
+	await axios.get('http://apionsaemiro.site/api/get_user_list_all',{params:{
 		id : manager_id
 	}})
 	.then(function(response){

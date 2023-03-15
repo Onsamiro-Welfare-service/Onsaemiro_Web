@@ -8,18 +8,16 @@ var UserList = [//서버에서 사용자리스트를 받아오면 저장해두�
 async function Request_UserList_Api(){
     //맨처음 해당 페이지를 접속하면 사용자 데이터를 호출
     // { AdminId : "SD1111" }
-    console.log("Api로 사용자 리스트 all get 요청");
+    console.log("Api로 사용자 리스트 all get 요청")
     //리턴값으로 사용자 정보가 오면 UserList에 저장
 	await axios.get('http://onsaemiro.website/process/get_session_user')
 	.then(function(response){
-		AdminId = response.data;
+		AdminB = JSON.stringify(response.data);
 	})
 	await axios.get('http://apionsaemiro.site/api/get_user_list_all',{params:{
-		id : AdminId
+		belong : AdminB
 	}})
 	.then(function(response){
-		console.log(AdminId);
-		console.log(response.data);
 		UserList = response.data;
 	});
 
@@ -63,7 +61,7 @@ function create_Profile(){
                     let profile_usrId = document.createElement('h5');
                     let profile_usrId_txt = document.createTextNode(UserList[i].id);
                     profile_usrId.setAttribute('class', 'card-title mb-0');
-                    profile_usrId.setAttribute('style', 'display:inline-block;  margin-left: 55%; color: gray; font-size:17px;');
+                    profile_usrId.setAttribute('style', 'display:inline-block; float:right; margin-right: 10px;  color: gray; font-size:17px;');
                     profile_usrId.appendChild(profile_usrId_txt);
                     header.appendChild(profile_usrId);
                 card.appendChild(header);

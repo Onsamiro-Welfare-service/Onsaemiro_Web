@@ -369,19 +369,25 @@ function closeModal(){
 function openpreview(){
     document.getElementById("preview_bg").style.display ='block';
     document.getElementById("preview_modal").style.display ='block';
-    set_Preview();
+    let type_val = document.getElementById("Question_Type").value;
+    switch(type_val){
+        case '2':
+            Create_Preview_2Choice();
+            break;
+        case '3':
+            Create_Preview_3Choice();
+            break;
+        case '4':
+            Create_Preview_4Choice();
+            break;
+        default:
+            console.log("미리보기 항목이 없습니다");
+    }
 }
 function closepreview(){
     document.getElementById("preview_bg").style.display ='none';
     document.getElementById("preview_modal").style.display ='none';
-
-    //선택형-2항일때 기존 데이터 초기화
-    document.getElementById("QuestionImg_screen").innerHTML = "";
-    document.getElementById("QuestionTxt_screen").innerText = "";
-    document.getElementById("AnswerImg1").innerHTML = "";
-    document.getElementById("AnswerImg2").innerHTML = "";
-    document.getElementById("AnswerTxt1").innerText = "";
-    document.getElementById("AnswerTxt2").innerText = "";
+    document.getElementById("phone_interior").innerHTML = "";
 }
 
 
@@ -530,50 +536,299 @@ function loadFile(input ,div_id) {
 };
 
 
-//질문 생성하기&미리보기
-function set_Preview(){//미리보기 화면 구성
-    //일단 문제유형 - 선택형(2항)만 구현
-    let is_QuestionImg = (document.getElementById("Question_Img").children.length > 0);
-    let QuestionTxt = document.getElementById("Question").value;
-    if(is_QuestionImg){//true면 사진이 있다는 뜻
-        var QuestionImage = document.createElement("img");
-        QuestionImage.setAttribute("class", 'img');
-        //newImage.setAttribute('id', eval("'" + div_id + "_Img'"))
-        QuestionImage.src = document.getElementById("Question_Img").children[0].src;
-        QuestionImage.style.width = "100%";
-        QuestionImage.style.height = "100%";
-        var container = document.getElementById("QuestionImg_screen");
-        container.appendChild(QuestionImage);
-    }
-    document.getElementById("QuestionTxt_screen").innerText = QuestionTxt;
+//2항 미리보기
+function Create_Preview_2Choice(){
+    //2항 질문칸 구역
+    let parent = document.getElementById("phone_interior");
+    let Question_interior = document.createElement("div");
+    Question_interior.setAttribute('id', 'Question_Interior');
+    Question_interior.setAttribute('class', 'Question_2Choice');
+        let Q_body = document.createElement("div");
+        Q_body.setAttribute('id', 'Question_Body');
+        Q_body.setAttribute('style', 'width: 320px; height: 280px; padding: 10px');
+            //2항 질문칸 미리보기 - 질문 사진
+            if(document.getElementById("Question_Img").children.length > 0){//질문칸 사진이 있는지 확인
+                let Q_img = document.createElement('img');
+                Q_img.setAttribute('class', 'Question_img_2Choice');
+                Q_img.src = document.getElementById("Question_Img").children[0].src;//질문 사진값
+                Q_body.appendChild(Q_img);
+            }
+            //2항 질문칸 미리보기 - 질문 내용
+            let Q_txt = document.createElement("div");
+            Q_txt.setAttribute('id', 'Question_txt');
+            Q_txt.textContent = document.getElementById("Question").value;//질문 txt값
+            Q_body.appendChild(Q_txt);
+        Question_interior.appendChild(Q_body);
+    parent.appendChild(Question_interior);
 
-    let is_Answer1Img = (document.getElementById("Answer1_Img").children.length > 0);
-    let Answer1Txt = document.getElementById("Answer1").value;
-    if(is_Answer1Img){//true면 사진이 있다는 뜻
-        var Answer1Image = document.createElement("img");
-        Answer1Image.setAttribute("class", 'img');
-        //newImage.setAttribute('id', eval("'" + div_id + "_Img'"))
-        Answer1Image.src = document.getElementById("Answer1_Img").children[0].src;
-        Answer1Image.style.width = "100%";
-        Answer1Image.style.height = "100%";
-        var container = document.getElementById("AnswerImg1");
-        container.appendChild(Answer1Image);
-    }
-    document.getElementById("AnswerTxt1").innerText = Answer1Txt;
+    //2항 답변칸 전체 구역
+    let Answer_group = document.createElement("div");
+    Answer_group.setAttribute('id', 'Answer_Group');
+    Answer_group.setAttribute('style', 'margin-top: 10px; height: 206px;');
+        //첫번째 답변 구역
+        let Answer1_interior = document.createElement('div');
+        Answer1_interior.setAttribute('id', 'Answer1_Interior');
+        Answer1_interior.setAttribute('class', 'Answer_2Choice_Style');
+            let Answer1_body = document.createElement('div');
+            Answer1_body.setAttribute('id', 'Answer1_body');
+                //2항 답변1칸 미리보기 - 답변1 사진 
+                if(document.getElementById("Answer1_Img").children.length > 0){//답변1 사진이 있는지 확인
+                    let A1_img = document.createElement('img');
+                    A1_img.setAttribute('class', 'Answer_img_2Choice');
+                    A1_img.src = document.getElementById("Answer1_Img").children[0].src;//답변1 사진값 
+                    Answer1_body.appendChild(A1_img);
+                }
+                //2항 답변1칸 미리보기 - 답변1 내용 
+                let A1_txt = document.createElement('div');
+                A1_txt.setAttribute('id', 'Answer1_txt');
+                A1_txt.setAttribute('class', 'Answer_txt_style1');
+                A1_txt.textContent = document.getElementById("Answer1").value;//답변1 txt값
+                Answer1_body.appendChild(A1_txt);
+            Answer1_interior.appendChild(Answer1_body);
+            Answer_group.appendChild(Answer1_interior);
+        
 
-    let is_Answer2Img = (document.getElementById("Answer2_Img").children.length > 0);
-    let Answer2Txt = document.getElementById("Answer2").value;
-    if(is_Answer2Img){//true면 사진이 있다는 뜻
-        var Answer2Image = document.createElement("img");
-        Answer2Image.setAttribute("class", 'img');
-        //newImage.setAttribute('id', eval("'" + div_id + "_Img'"))
-        Answer2Image.src = document.getElementById("Answer2_Img").children[0].src;
-        Answer2Image.style.width = "100%";
-        Answer2Image.style.height = "100%";
-        var container = document.getElementById("AnswerImg2");
-        container.appendChild(Answer2Image);
-    }
-    document.getElementById("AnswerTxt2").innerText = Answer2Txt;
+        //두번째 답변 구역
+        let Answer2_interior = document.createElement('div');
+        Answer2_interior.setAttribute('id', 'Answer2_Interior');
+        Answer2_interior.setAttribute('class', 'Answer_2Choice_Style');
+            let Answer2_body = document.createElement('div');
+            Answer2_body.setAttribute('id', 'Answer2_body');
+                //2항 답변2칸 미리보기 - 답변2 사진 
+                if(document.getElementById("Answer2_Img").children.length > 0){//답변2 사진이 있는지 확인
+                    let A2_img = document.createElement('img');
+                    A2_img.setAttribute('class', 'Answer_img_2Choice');
+                    A2_img.src = document.getElementById("Answer2_Img").children[0].src;//답변2 사진값 
+                    Answer2_body.appendChild(A2_img);
+                }
+                //2항 답변2칸 미리보기 - 답변2 내용 
+                let A2_txt = document.createElement('div');
+                A2_txt.setAttribute('id', 'Answer2_txt');
+                A2_txt.setAttribute('class', 'Answer_txt_style1');
+                A2_txt.textContent = document.getElementById("Answer2").value;//답변2 txt값
+                Answer2_body.appendChild(A2_txt);
+            Answer2_interior.appendChild(Answer2_body);
+        Answer_group.appendChild(Answer2_interior);
+    parent.appendChild(Answer_group);
+}
+
+//3항 미리보기
+function Create_Preview_3Choice(){
+    //3항 질문칸 구역
+    let parent = document.getElementById("phone_interior");
+    let Question_interior = document.createElement("div");
+    Question_interior.setAttribute('id', 'Question_Interior');
+    Question_interior.setAttribute('class', 'Question_3Choice');
+        let Q_body = document.createElement("div");
+        Q_body.setAttribute('id', 'Question_Body');
+        Q_body.setAttribute('style', 'width: 320px; height: 280px; padding: 10px');
+            //2항 질문칸 미리보기 - 질문 사진
+            if(document.getElementById("Question_Img").children.length > 0){//질문칸 사진이 있는지 확인
+                let Q_img = document.createElement('img');
+                Q_img.setAttribute('class', 'Question_img_3Choice');
+                Q_img.src = document.getElementById("Question_Img").children[0].src;//질문 사진값
+                Q_body.appendChild(Q_img);
+            }
+            //2항 질문칸 미리보기 - 질문 내용
+            let Q_txt = document.createElement("div");
+            Q_txt.setAttribute('id', 'Question_txt');
+            Q_txt.textContent = document.getElementById("Question").value;//질문 txt값
+            Q_body.appendChild(Q_txt);
+        Question_interior.appendChild(Q_body);
+    parent.appendChild(Question_interior);
+
+    //3항 답변칸
+    let Answer_group = document.createElement("div");
+    Answer_group.setAttribute('id', 'Answer_Group');
+    Answer_group.setAttribute('style', 'margin-top: 10px; height: 206px;');
+        //첫번째 답변 구역
+        let Answer1_interior = document.createElement('div');
+        Answer1_interior.setAttribute('id', 'Answer1_Interior');
+        Answer1_interior.setAttribute('class', 'Answer_3Choice_Style');
+            let Answer1_body = document.createElement('div');
+            Answer1_body.setAttribute('id', 'Answer1_body');
+                //3항 답변1칸 미리보기 - 답변1 사진 
+                if(document.getElementById("Answer1_Img").children.length > 0){//답변1 사진이 있는지 확인
+                    let A1_img = document.createElement('img');
+                    A1_img.setAttribute('class', 'Answer_img_3Choice');
+                    A1_img.src = document.getElementById("Answer1_Img").children[0].src;//답변1 사진값 
+                    Answer1_body.appendChild(A1_img);
+                }
+                //3항 답변1칸 미리보기 - 답변1 내용 
+                let A1_txt = document.createElement('div');
+                A1_txt.setAttribute('id', 'Answer1_txt');
+                A1_txt.setAttribute('class', 'Answer_txt_style1');
+                A1_txt.textContent = document.getElementById("Answer1").value;//답변1 txt값
+                Answer1_body.appendChild(A1_txt);
+            Answer1_interior.appendChild(Answer1_body);
+            Answer_group.appendChild(Answer1_interior);
+        
+
+        //두번째 답변 구역
+        let Answer2_interior = document.createElement('div');
+        Answer2_interior.setAttribute('id', 'Answer2_Interior');
+        Answer2_interior.setAttribute('class', 'Answer_3Choice_Style');
+            let Answer2_body = document.createElement('div');
+            Answer2_body.setAttribute('id', 'Answer2_body');
+                //3항 답변2칸 미리보기 - 답변2 사진 
+                if(document.getElementById("Answer2_Img").children.length > 0){//답변2 사진이 있는지 확인
+                    let A2_img = document.createElement('img');
+                    A2_img.setAttribute('class', 'Answer_img_3Choice');
+                    A2_img.src = document.getElementById("Answer2_Img").children[0].src;//답변2 사진값 
+                    Answer2_body.appendChild(A2_img);
+                }
+                //3항 답변2칸 미리보기 - 답변2 내용 
+                let A2_txt = document.createElement('div');
+                A2_txt.setAttribute('id', 'Answer2_txt');
+                A2_txt.setAttribute('class', 'Answer_txt_style1');
+                A2_txt.textContent = document.getElementById("Answer2").value;//답변2 txt값
+                Answer2_body.appendChild(A2_txt);
+            Answer2_interior.appendChild(Answer2_body);
+        Answer_group.appendChild(Answer2_interior);
+
+        //세번째 답변 구역
+        let Answer3_interior = document.createElement('div');
+        Answer3_interior.setAttribute('id', 'Answer3_Interior');
+        Answer3_interior.setAttribute('class', 'Answer_3Choice_Style');
+            let Answer3_body = document.createElement('div');
+            Answer3_body.setAttribute('id', 'Answer3_body');
+                //3항 답변3칸 미리보기 - 답변3 사진 
+                if(document.getElementById("Answer3_Img").children.length > 0){//답변3 사진이 있는지 확인
+                    let A3_img = document.createElement('img');
+                    A3_img.setAttribute('class', 'Answer_img_3Choice');
+                    A3_img.src = document.getElementById("Answer3_Img").children[0].src;//답변3 사진값 
+                    Answer3_body.appendChild(A3_img);
+                }
+                //3항 답변3칸 미리보기 - 답변3 내용 
+                let A3_txt = document.createElement('div');
+                A3_txt.setAttribute('id', 'Answer3_txt');
+                A3_txt.setAttribute('class', 'Answer_txt_style1');
+                A3_txt.textContent = document.getElementById("Answer3").value;//답변3 txt값
+                Answer3_body.appendChild(A3_txt);
+            Answer3_interior.appendChild(Answer3_body);
+        Answer_group.appendChild(Answer3_interior);
+    parent.appendChild(Answer_group);
+}
+function Create_Preview_4Choice(){
+    //4항 질문칸 구역
+    let parent = document.getElementById("phone_interior");
+    let Question_interior = document.createElement("div");
+    Question_interior.setAttribute('id', 'Question_Interior');
+    Question_interior.setAttribute('class', 'Question_4Choice');
+        let Q_body = document.createElement("div");
+        Q_body.setAttribute('id', 'Question_Body');
+        Q_body.setAttribute('style', 'width: 320px; height: 240px; margin-left: 10px;');
+            //2항 질문칸 미리보기 - 질문 사진
+            if(document.getElementById("Question_Img").children.length > 0){//질문칸 사진이 있는지 확인
+                let Q_img = document.createElement('img');
+                Q_img.setAttribute('class', 'Question_img_4Choice');
+                Q_img.src = document.getElementById("Question_Img").children[0].src;//질문 사진값
+                Q_body.appendChild(Q_img);
+            }
+            //2항 질문칸 미리보기 - 질문 내용
+            let Q_txt = document.createElement("div");
+            Q_txt.setAttribute('id', 'Question_txt');
+            Q_txt.textContent = document.getElementById("Question").value;//질문 txt값
+            Q_body.appendChild(Q_txt);
+        Question_interior.appendChild(Q_body);
+    parent.appendChild(Question_interior);
+
+    //4항 답변칸 전체 구역
+    let Answer_group = document.createElement("div");//4항 답변칸 전체 구역
+    Answer_group.setAttribute('id', 'Answer_Group');
+    Answer_group.setAttribute('style', 'height: 260px;');
+        //첫번째 답변 구역
+        let Answer1_interior = document.createElement('div');
+        Answer1_interior.setAttribute('id', 'Answer1_Interior');
+        Answer1_interior.setAttribute('class', 'Answer_4Choice_Style');
+            let Answer1_body = document.createElement('div');
+            Answer1_body.setAttribute('id', 'Answer1_body');
+                //4항 답변1칸 미리보기 - 답변1 사진 
+                if(document.getElementById("Answer1_Img").children.length > 0){//답변1 사진이 있는지 확인
+                    let A1_img = document.createElement('img');
+                    A1_img.setAttribute('class', 'Answer_img_4Choice');
+                    A1_img.src = document.getElementById("Answer1_Img").children[0].src;//답변1 사진값 
+                    Answer1_body.appendChild(A1_img);
+                }
+                //4항 답변1칸 미리보기 - 답변1 내용 
+                let A1_txt = document.createElement('div');
+                A1_txt.setAttribute('id', 'Answer1_txt');
+                A1_txt.setAttribute('class', 'Answer_txt_style2');
+                A1_txt.textContent = document.getElementById("Answer1").value;//답변1 txt값
+                Answer1_body.appendChild(A1_txt);
+            Answer1_interior.appendChild(Answer1_body);
+            Answer_group.appendChild(Answer1_interior);
+        
+
+        //두번째 답변 구역
+        let Answer2_interior = document.createElement('div');
+        Answer2_interior.setAttribute('id', 'Answer2_Interior');
+        Answer2_interior.setAttribute('class', 'Answer_4Choice_Style');
+            let Answer2_body = document.createElement('div');
+            Answer2_body.setAttribute('id', 'Answer2_body');
+                //4항 답변2칸 미리보기 - 답변2 사진 
+                if(document.getElementById("Answer2_Img").children.length > 0){//답변2 사진이 있는지 확인
+                    let A2_img = document.createElement('img');
+                    A2_img.setAttribute('class', 'Answer_img_4Choice');
+                    A2_img.src = document.getElementById("Answer2_Img").children[0].src;//답변2 사진값 
+                    Answer2_body.appendChild(A2_img);
+                }
+                //4항 답변2칸 미리보기 - 답변2 내용 
+                let A2_txt = document.createElement('div');
+                A2_txt.setAttribute('id', 'Answer2_txt');
+                A2_txt.setAttribute('class', 'Answer_txt_style2');
+                A2_txt.textContent = document.getElementById("Answer2").value;//답변2 txt값
+                Answer2_body.appendChild(A2_txt);
+            Answer2_interior.appendChild(Answer2_body);
+        Answer_group.appendChild(Answer2_interior);
+
+        //세번째 답변 구역
+        let Answer3_interior = document.createElement('div');
+        Answer3_interior.setAttribute('id', 'Answer3_Interior');
+        Answer3_interior.setAttribute('class', 'Answer_4Choice_Style');
+            let Answer3_body = document.createElement('div');
+            Answer3_body.setAttribute('id', 'Answer3_body');
+                //4항 답변3칸 미리보기 - 답변3 사진 
+                if(document.getElementById("Answer3_Img").children.length > 0){//답변3 사진이 있는지 확인
+                    let A3_img = document.createElement('img');
+                    A3_img.setAttribute('class', 'Answer_img_4Choice');
+                    A3_img.src = document.getElementById("Answer3_Img").children[0].src;//답변3 사진값 
+                    Answer3_body.appendChild(A3_img);
+                }
+                //4항 답변3칸 미리보기 - 답변3 내용 
+                let A3_txt = document.createElement('div');
+                A3_txt.setAttribute('id', 'Answer3_txt');
+                A3_txt.setAttribute('class', 'Answer_txt_style2');
+                A3_txt.textContent = document.getElementById("Answer3").value;//답변3 txt값
+                Answer3_body.appendChild(A3_txt);
+            Answer3_interior.appendChild(Answer3_body);
+        Answer_group.appendChild(Answer3_interior);
+
+        //네번째 답변 구역
+        let Answer4_interior = document.createElement('div');
+        Answer4_interior.setAttribute('id', 'Answer4_Interior');
+        Answer4_interior.setAttribute('class', 'Answer_4Choice_Style');
+            let Answer4_body = document.createElement('div');
+            Answer4_body.setAttribute('id', 'Answer4_body');
+                //4항 답변4칸 미리보기 - 답변4 사진 
+                if(document.getElementById("Answer4_Img").children.length > 0){//답변4 사진이 있는지 확인
+                    let A4_img = document.createElement('img');
+                    A4_img.setAttribute('class', 'Answer_img_4Choice');
+                    A4_img.src = document.getElementById("Answer4_Img").children[0].src;//답변4 사진값 
+                    Answer4_body.appendChild(A4_img);
+                }
+                //4항 답변4칸 미리보기 - 답변4 내용 
+                let A4_txt = document.createElement('div');
+                A4_txt.setAttribute('id', 'Answer4_txt');
+                A4_txt.setAttribute('class', 'Answer_txt_style2');
+                A4_txt.textContent = document.getElementById("Answer4").value;//답변4 txt값
+                Answer4_body.appendChild(A4_txt);
+            Answer4_interior.appendChild(Answer4_body);
+        Answer_group.appendChild(Answer4_interior);
+    parent.appendChild(Answer_group);
+}
+function Reset_Preview(){
+
 }
 
 async function Create_Question(){//생성하기를 누르면 입력된 정보 다 긁어오고 기존 정보 초기화
