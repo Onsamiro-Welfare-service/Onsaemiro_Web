@@ -37,6 +37,7 @@ Request_API("S");
 Request_API("H");
 Request_API("M");
 
+
 async function Request_API(category){//Request_API("DL");
 // 모든 질문 불러오기 (관리자 웹용) <- 삭제로 죽은 질문지까지 모두 불러오는 API:get
 
@@ -95,13 +96,17 @@ async function Request_API(category){//Request_API("DL");
     }
 }
 
+var is_modify = "";//만약 수정중이라면 해당 항목에 대해서는 작동x
 function show_Answer(div){//질문리스트에서 답변항목 볼수 있게 토글
-    console.log("실행");
+    //console.log("실행");
     let con = document.getElementById(div);
-    if(con.style.display == "block")
-        con.style.display = "none";
-    else 
-        con.style.display = "block";
+    if(is_modify != div){
+        if(con.style.display == "block")
+            con.style.display = "none";
+        else 
+            con.style.display = "block";
+    } 
+    
 }
 function create_QuestionList(category){//create_QuestionList("Safe")
     let parent = document.getElementById("QuestionList");
@@ -143,6 +148,16 @@ function create_QuestionList(category){//create_QuestionList("Safe")
             closeBtn.setAttribute('class', 'Question_CloseBtn');
             closeBtn.setAttribute('onclick', eval("'QuestionClose(`" + QuestionList_Arr[i].code + "`)'"));
             child.appendChild(closeBtn);
+
+            let modifiyBtn = document.createElement('input');
+            modifiyBtn.setAttribute('id', eval("'" + QuestionList_Arr[i].code + "_modifyBtn'"));
+            modifiyBtn.setAttribute('type', 'button');
+            modifiyBtn.setAttribute('value', '수정');
+            modifiyBtn.setAttribute('class', 'Question_modifiyBtn');
+            modifiyBtn.setAttribute('style', 'border: 2px solid #dcdcdca8; background-color: #dcdcdca8;');
+            //modifiyBtn.setAttribute('disabled', 'false');
+            modifiyBtn.setAttribute('onclick', eval("'QuestionModify(`" + QuestionList_Arr[i].code + "`)'"));
+            child.appendChild(modifiyBtn);
         
             let Icon = document.createElement('span');
             let IconText = document.createTextNode(categoryIcon_txt);
@@ -161,6 +176,7 @@ function create_QuestionList(category){//create_QuestionList("Safe")
 				QuestionContent_Text = document.createTextNode(QuestionList_Arr[i].question);
 			}
 			QuestionContent.setAttribute('class', 'QuestionText');
+            QuestionContent.setAttribute('id', eval("'" + QuestionList_Arr[i].code + "_Question'"));
             QuestionContent.appendChild(QuestionContent_Text);
             child.appendChild(QuestionContent);
 
@@ -198,6 +214,7 @@ function create_QuestionList(category){//create_QuestionList("Safe")
                     let AnswerText = document.createElement('div');
                     let AnswerText_val = document.createTextNode('o 답변' + p + ': ' + AnswerObj[Answer_arr.pop()]);//각각의 답변값들
                     AnswerText.setAttribute('class', 'AnswerText');
+                    AnswerText.setAttribute('id', eval("'" + QuestionList_Arr[i].code + "_Answer" + p +"'"));
                     AnswerText.appendChild(AnswerText_val);
                     AnswerDiv.appendChild(enter);
                     AnswerDiv.appendChild(AnswerText);
@@ -218,6 +235,47 @@ function create_QuestionList(category){//create_QuestionList("Safe")
                 AnswerDiv.appendChild(Default_Answer);
             }
             child.appendChild(AnswerDiv);
+
+            let InputText = document.createElement('div');
+            InputText.setAttribute("id", eval("'" + QuestionList_Arr[i].code + "_Input'"));
+            InputText.setAttribute("style", "display: none; margin-top: 10px");
+
+                let Question_Input = document.createElement('input');
+                Question_Input.setAttribute("id", eval("'" + QuestionList_Arr[i].code + "_Input_Question'"));
+                Question_Input.setAttribute('style', 'font-size: 20px; margin-left: 95px; width: 80%;');
+                Question_Input.setAttribute('placeholder', '질문사항을 수정해주세요.');
+                InputText.appendChild(Question_Input);
+
+                
+                for(let n=1; n <= AnswerCount; n++){
+                    let br = document.createElement('br');
+                    InputText.appendChild(br);
+
+                    let Answer_Input = document.createElement('input');
+                    Answer_Input.setAttribute("id", eval("'" + QuestionList_Arr[i].code + "_Input_Answer"+ n +"'"));
+                    Answer_Input.setAttribute('style', 'font-size: 20px; margin-left: 115px; width: 78%; margin-top: 10px;');
+                    Answer_Input.setAttribute('placeholder', '답변항목을 수정해주세요.');
+                    InputText.appendChild(Answer_Input);
+                }
+
+                let div1 = document.createElement('div');
+                div1.setAttribute('style', 'height: 35px; margin-top: 20px;');
+                    let CancelBtn = document.createElement('input');
+                    CancelBtn.setAttribute('type', 'button');
+                    CancelBtn.setAttribute('value', '취소');
+                    CancelBtn.setAttribute('class','modify_cancelBtn');
+                    CancelBtn.setAttribute('onclick', eval("'CancelModify(`" + QuestionList_Arr[i].code + "`)'"));
+                    div1.appendChild(CancelBtn);
+
+                    let SaveBtn = document.createElement('input');
+                    SaveBtn.setAttribute('type', 'button');
+                    SaveBtn.setAttribute('value', '저장');
+                    SaveBtn.setAttribute('class','modify_saveBtn');
+                    SaveBtn.setAttribute('onclick', eval("'SaveModify(`" + QuestionList_Arr[i].code + "`)'"));
+                div1.appendChild(SaveBtn);
+                
+                InputText.appendChild(div1);
+            child.appendChild(InputText);
         parent.appendChild(child);
     }
     is_Empty();
@@ -244,6 +302,78 @@ async function QuestionClose(id){
 	//삭제 api 요청
 }
 //문진표 질문 리스트 확인 및 검색 관련
+
+function QuestionModify(questionId){
+    is_modify = questionId + "_Answer";
+    document.getElementById(is_modify).style.display = "block";
+    document.getElementById(questionId + "_Input").style.display = "block";
+
+    let btn = document.getElementById(questionId + "_modifyBtn");
+    btn.disabled = true;
+    btn.value = "수정 중";
+    btn.style = "border: 2px solid #569ff7;background-color: #569ff7; color: white;"
+    //btn.style.display = "block";
+}
+
+function CancelModify(questionId){
+    document.getElementById(is_modify).style.display = "none";
+    is_modify = "";
+    document.getElementById(questionId + "_Input").style.display = "none";
+    
+    let btn = document.getElementById(questionId + "_modifyBtn");
+    btn.disabled = false;
+    btn.value = "수정";
+    btn.style = "border: 2px solid #dcdcdca8;background-color: #dcdcdca8; color: black;"
+}
+
+
+async function SaveModify(questionId){
+    if(confirm("변경사항을 업데이트하시겠습니까?")){
+        let modify_question = document.getElementById(questionId + "_Input_Question").value;
+
+        let elemCount = document.getElementById(questionId +"_Input").childElementCount;
+        let answerCount = (elemCount - 2)/2;
+        let answer_data = {
+            a1: "",
+            a2: "",
+            a3: "",
+            a4: ""
+        }
+        for(v=1; v <= answerCount; v++){
+            switch(v){
+                case 1: 
+                    answer_data.a1 = document.getElementById(questionId + "_Input_Answer1").value;
+                    break;
+                case 2: 
+                    answer_data.a2 = document.getElementById(questionId + "_Input_Answer2").value;
+                    break;
+                case 3: 
+                    answer_data.a3 = document.getElementById(questionId + "_Input_Answer3").value;
+                    break;
+                case 4: 
+                    answer_data.a4 = document.getElementById(questionId + "_Input_Answer4").value;
+                    break;
+            }
+        }
+        //console.log(modify_data);
+
+        await axios.post("http://apionsaemiro.site/api/modify_question",{
+			code: questionId,
+            question: modify_question,
+            option: JSON.stringify(answer_data)
+		}).then((response) => {
+     	 if (response) {
+        	console.log(response.data);
+      	}
+    	})
+    	.catch((error) => {
+      		console.log(error);
+      	
+    	});
+		location.reload();
+    }
+}
+
 function filter() {
     let search = document.getElementById("search_Question").value.toLowerCase();
     let listInner = document.getElementsByClassName("Question_Style");
@@ -392,7 +522,6 @@ function closepreview(){
 
 
 //질문창 작동관련
-
 function QuestionType(){//선택한 항목에 따라 div 생성
     let TypeVal = document.getElementById("Question_Type").value;
     let AnswerList = document.getElementById("AnswerList_body");
@@ -418,31 +547,8 @@ function QuestionType(){//선택한 항목에 따라 div 생성
     }
 }
 
-//답변칸 생성
-// function create_Slide(parent){
-//     let child = document.createElement('div');
-//         let Txt = document.createElement('div');
-//         let Txt_str = document.createTextNode("* 필수입력 사항입니다");
-//         Txt.setAttribute('id', 'Answer0_Txt');
-//         Txt.setAttribute('style', 'color:black; font-size: 14px;');
-//         Txt.appendChild(Txt_str);
-//         child.appendChild(Txt);
-//         let Answer = document.createElement('input');
-//         Answer.setAttribute('type', 'text');
-//         Answer.setAttribute('id', 'Answer0');
-//         Answer.setAttribute('class', 'Text_style');
-//         Answer.setAttribute('placeholder', '답변내용을 입력하세요.');
-//         Answer.setAttribute('onkeyup', 'Detect("Answer0")');
-//         child.appendChild(Answer);
-//     parent.appendChild(child);
-// }
 
 function create_Default_Slide(parent){
-    //document.getElementById("Question_Txt").style.display = "none";
-    //document.getElementById("Question").style.display = "none";
-    //document.getElementById("Question_ImgBtn").style.display = "none";
-    //document.getElementById("Question_Default").style.display = "block";
-
     let child = document.createElement('h4');
     child.setAttribute('style', 'font-weight: bold; padding: 3px; color: gray;background-color: lightgray;');
     let child_txt = document.createTextNode('기본값 입니다.');
@@ -451,10 +557,6 @@ function create_Default_Slide(parent){
 }
 
 function create_Select(parent, index){
-    //document.getElementById("Question_Txt").style.display = "block";
-    //document.getElementById("Question").style.display = "block";
-    //document.getElementById("Question_ImgBtn").style.display = "block";
-    //document.getElementById("Question_Default").style.display = "none";
     for(let i=1;i<= index; i++){
         let child = document.createElement('div');
             let Img = document.createElement('div');
