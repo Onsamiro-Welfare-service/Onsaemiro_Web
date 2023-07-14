@@ -1,36 +1,8 @@
-/**질문 생성: post
-http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/create_question
-{
-    "category" :  카테고리 코드
-    "type" :  답변 타입 (0: 선택지 2개, 1: 선택지 3개, 2: 선택지 10개 <- 나중에 확실히 정하면 될듯)
-    "body" : 질문 내용
-    "option" : 답변 내용 <- 프론트쪾에서 불러오기 쉬은 방식으로 만든 뒤 스트링으로 변환해서 보내주면 됨. 아마 JSON 배열 방식이 편하지 않을까 싶음
-    “Photo” : 사진 <- 링크 필요한거 문제 답변 순서 순으로 배열 만들어서 업로드 하면 될듯? 이것도 프론트에서 편한 방식으로 규칙정해서 ㄱㄱㄱ 업로드만 스트링 방식이면 됨
-} */
-
 //문진표 질문 받아오기 및 질문리스트 생성
-//[{“code":"DL1493","category":"DL","type":"0","option":"{ '1' : 'd', '2' : 'd'}"}]
-var Category_DL_Arr = [
-    { code: "DL111", category: "DL", type: "1", question:"일상 질문내용1111", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-1.jpg", alive: true },
-    { code: "DL222", category: "DL", type: "1", question:"일상 질문내용2222", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-2.jpg", alive: true },
-    { code: "DL333", category: "DL", type: "1", question:"일상 질문내용3333", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-3.jpg", alive: true }
-];
-var Category_S_Arr = [
-    { code: "S1111", category: "S", type: "1", question:"안전 질문내용1111", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-1.jpg", alive: true },
-    { code: "S2222", category: "S", type: "1", question:"안전 질문내용2222", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-2.jpg", alive: true },
-    { code: "S3333", category: "S", type: "1", question:"안전 질문내용3333", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-3.jpg", alive: true },
-    { code: "S4444", category: "S", type: "1", question:"안전 질문내용4444", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-4.jpg", alive: true },
-];
-var Category_H_Arr = [
-    { code: "H1111", category: "H", type: "1", question:"건강 질문내용1111", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-1.jpg", alive: true },
-    { code: "H2222", category: "H", type: "1", question:"건강 질문내용2222", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-2.jpg", alive: true },
-    { code: "H3333", category: "H", type: "1", question:"건강 질문내용3333", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-3.jpg", alive: true },
-    { code: "H4444", category: "H", type: "1", question:"건강 질문내용4444", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-4.jpg", alive: true },
-];
-var Category_M_Arr = [
-    { code: "M1111", category: "M", type: "1", question:"마음 질문내용1111", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-1.jpg", alive: true },
-    { code: "M2222", category: "M", type: "1", question:"마음 질문내용2222", option: ["답변1","답변2"], photo: "../src/img/avatars/avatar-2.jpg", alive: true },
-];
+var Category_DL_Arr = [];
+var Category_S_Arr = [];
+var Category_H_Arr = [];
+var Category_M_Arr = [];
 //초기실행
 Request_API("DL");
 Request_API("S");
@@ -40,14 +12,9 @@ Request_API("M");
 
 async function Request_API(category){//Request_API("DL");
 // 모든 질문 불러오기 (관리자 웹용) <- 삭제로 죽은 질문지까지 모두 불러오는 API:get
-
     let Request_QuestionAPI = new Object();
     Request_QuestionAPI.category = category;
-    // {
-    //     "category" : "DL"
-    // }
-    // https://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/load_all_question
-    // 리턴값 질문 불러오기와 같음
+    
     let ReturnVal = [];// 받아온 값 ReturnVal에 할당 
  await axios
     .get(
@@ -58,15 +25,12 @@ async function Request_API(category){//Request_API("DL");
 		}
 	  }).then(function(response) {
       if (response) {
-        //imageurl = response.data;
         console.log(response.data);
 		  ReturnVal=response.data;
-      //  console.log(response.data.category);
       }
     })
-    .catch((error) => {
-//      console.log(error);
-      
+    .catch((error) => {  
+
     });
 
 
@@ -112,34 +76,43 @@ function create_QuestionList(category){//create_QuestionList("Safe")
     let parent = document.getElementById("QuestionList");
     let categoryIcon_color, categoryIcon_txt;//생성할 항목의 카테고리 속성
     let QuestionList_Arr;//생성할 질문리스트 배열
+    let Category_className;
+
     switch(category){//카테고리 별 속성 부여
         case "Safe":
             categoryIcon_color = "#FF2626";
             categoryIcon_txt = "안전";
             QuestionList_Arr = Category_S_Arr;
+            Category_className = "safe";
             break;
         case "Mind":
             categoryIcon_color = "#F35588";
             categoryIcon_txt = "마음";
             QuestionList_Arr = Category_M_Arr;
+            Category_className = "mind";
             break;
         case "Health":
             categoryIcon_color = "#007944";
             categoryIcon_txt = "건강";
             QuestionList_Arr = Category_H_Arr;
+            Category_className = "health";
             break;
         case "DailyLife":
             categoryIcon_color = "#fd7e14";
             categoryIcon_txt = "일상";
             QuestionList_Arr = Category_DL_Arr;
+            Category_className = "daily";
             break;
         default:
             console.log("create_QuestionList() : Category Not Found!");
     }
+    let category_div = document.createElement('div');
+    category_div.setAttribute('id', eval("'" + Category_className + "_box'"));
+
     for(let i=0; i< QuestionList_Arr.length; i++){
         let child = document.createElement('div');
         child.setAttribute('id', eval("'" + QuestionList_Arr[i].code + "'"));//질문코드가 id
-        child.setAttribute('class', 'Question_Style');
+        child.setAttribute('class',eval("'Question_Style " + Category_className + "'"));
         child.setAttribute('name', eval("'" + category + "'"));
         child.setAttribute('onclick', eval("'show_Answer(`" + QuestionList_Arr[i].code + "_Answer`)'" ));
             let closeBtn = document.createElement('input');
@@ -276,9 +249,25 @@ function create_QuestionList(category){//create_QuestionList("Safe")
                 
                 InputText.appendChild(div1);
             child.appendChild(InputText);
-        parent.appendChild(child);
+            category_div.appendChild(child);
     }
+    parent.appendChild(category_div);
     is_Empty();
+}
+
+function divChangeTest(){
+    let container = document.getElementById('daily_box');
+    let boxes = container.getElementsByClassName('daily');
+    let boxArray = Array.from(boxes);
+    
+    let temp = boxArray[0];
+    boxArray[0] = boxArray[1];
+    boxArray[1] = temp;
+
+    for (let i = 0; i < boxArray.length; i++) {
+        container.appendChild(boxArray[i]);
+    }
+    
 }
 
 async function QuestionClose(id){
@@ -312,7 +301,6 @@ function QuestionModify(questionId){
     btn.disabled = true;
     btn.value = "수정 중";
     btn.style = "border: 2px solid #569ff7;background-color: #569ff7; color: white;"
-    //btn.style.display = "block";
 }
 
 function CancelModify(questionId){
@@ -355,7 +343,6 @@ async function SaveModify(questionId){
                     break;
             }
         }
-        //console.log(modify_data);
 
         await axios.post("http://apionsaemiro.site/api/modify_question",{
 			code: questionId,
@@ -379,7 +366,6 @@ function filter() {
     let listInner = document.getElementsByClassName("Question_Style");
 
     for (let i = 0; i < listInner.length; i++) {
-        //city = listInner[i].getElementsByClassName("city");
         if(listInner[i].value != false){
             Question = listInner[i].getElementsByClassName("QuestionText");
             if (Question[0].innerHTML.toLowerCase().indexOf(search) != -1) {
@@ -624,7 +610,6 @@ function loadFile(input ,div_id) {
     var file = input.files[0];
     var newImage = document.createElement("img");
     newImage.setAttribute("class", 'img');
-    //newImage.setAttribute('id', eval("'" + div_id + "_Img'"))
     newImage.src = URL.createObjectURL(file);   
     newImage.style.width = "100%";
     newImage.style.height = "100%";
@@ -1030,7 +1015,6 @@ async function Post_Img(Img_file){//이미지 파일 업로드
     // 사진 업로드 : post
     // http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/upload_photo
     // 리턴값 -> 사진 링크
-//	console.log(123);
 	var imageurl;
   if (Img_file) {
     const uploadFile = Img_file;
@@ -1092,12 +1076,5 @@ async function Request_API_Question(data){//새로운 질문 Post
 	}).catch((err)=>{
 		console.log(err)
 	});
-    // http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/create_question
-    // 질문 생성: post
-    // http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/api/create_question
-    // "category" : "DL",
-    // "type" : "2",
-    // "question" : "밥은 먹었나요?",
-    // "option":  "{"a1": "네", "a2": "아니요"}",
-    // "photo": "{"q": "http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/load/eat.png/" , "a1": "http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/load/check.png/" , "a2": "http://ec2-43-201-19-40.ap-northeast-2.compute.amazonaws.com/load/x.png/" }"
+    
 }
