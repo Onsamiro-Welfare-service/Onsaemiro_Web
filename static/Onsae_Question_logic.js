@@ -131,6 +131,27 @@ function create_QuestionList(category){//create_QuestionList("Safe")
             //modifiyBtn.setAttribute('disabled', 'false');
             modifiyBtn.setAttribute('onclick', eval("'QuestionModify(`" + QuestionList_Arr[i].code + "`)'"));
             child.appendChild(modifiyBtn);
+
+
+            let sequence_div = document.createElement('div');//순서변경
+            sequence_div.setAttribute('style', 'float:right; margin-right: 15px;');
+
+                let upbtn = document.createElement('img');
+                upbtn.setAttribute('class', 'upbtn_style sequence_btn');
+                upbtn.setAttribute('src', './img/icons/up_btn.png');
+                upbtn.setAttribute('style', 'display:none;');
+                sequence_div.appendChild(upbtn);
+                
+                let downbtn = document.createElement('img');
+                downbtn.setAttribute('class', 'downbtn_style sequence_btn');
+                downbtn.setAttribute('src', './img/icons/down_btn.png');
+                downbtn.setAttribute('style', 'display:none;');
+                sequence_div.appendChild(downbtn);
+            child.appendChild(sequence_div);
+
+
+
+            
         
             let Icon = document.createElement('span');
             let IconText = document.createTextNode(categoryIcon_txt);
@@ -255,7 +276,7 @@ function create_QuestionList(category){//create_QuestionList("Safe")
     is_Empty();
 }
 
-function divChangeTest(){
+function divChangeTest(){//질문 순서 변경 테스트
     let container = document.getElementById('daily_box');
     let boxes = container.getElementsByClassName('daily');
     let boxArray = Array.from(boxes);
@@ -266,10 +287,60 @@ function divChangeTest(){
 
     for (let i = 0; i < boxArray.length; i++) {
         container.appendChild(boxArray[i]);
-    }
-    
+    }   
 }
 
+function sequenceChange(btn){//질문 순서 변경 모드 버튼
+    let cate_daily = document.getElementById('daily_box');
+    let cate_health = document.getElementById('health_box');
+    let cate_mind = document.getElementById('mind_box');
+    let cate_safe = document.getElementById('safe_box');
+
+    let style_on = 'border: 6px solid skyblue;border-radius: 5px; margin-bottom: 10px;';
+    let style_off = '';
+    let mode = document.getElementById("seq_btn").className;
+    
+    let seq_cancel = document.getElementById("create_Question");
+    
+
+    if(mode == "sequence_change"){
+        cate_daily.style = style_on;
+        cate_health.style = style_on
+        cate_mind.style = style_on;
+        cate_safe.style = style_on;
+
+        let buttons = document.querySelectorAll('.sequence_btn');
+        for (let btn_index = 0; btn_index < buttons.length; btn_index++) {
+            buttons[btn_index].style.display = 'block';
+        }
+
+        btn.value = "순서 변경 완료";
+        seq_cancel.value = "취소하기";
+        seq_cancel.setAttribute('onclick', 'sequenceCancel()');
+    } else {
+        cate_daily.style = style_off;
+        cate_health.style = style_off
+        cate_mind.style = style_off;
+        cate_safe.style = style_off;
+
+        let buttons = document.querySelectorAll('.sequence_btn');
+        for (let btn_index = 0; btn_index < buttons.length; btn_index++) {
+            buttons[btn_index].style.display = 'none';
+        }
+
+        btn.value = "순서 변경 지정";
+        seq_cancel.value = "질문 생성하기";
+        seq_cancel.setAttribute('onclick', 'openModal()');
+    }
+    
+    seq_cancel.classList.toggle('active');
+    btn.classList.toggle('active');
+}
+
+function sequenceCancel(){//질문 순서 변경 취소
+    console.log("취소되었습니다");
+    location.reload();
+}
 async function QuestionClose(id){
 	if(confirm("질문을 삭제하시겠습니까?")){
 		document.getElementById(id).style.display = "none";

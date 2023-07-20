@@ -86,7 +86,9 @@
 								<div class="card-header" >
 									<h4 style="font-weight: bold; display:inline-block;">질문 검색 :</h4>
 									<input type="text" id="search_Question" onkeyup="filter()" placeholder="질문 내용을 입력하여 검색하세요.">
-									<input type="button" id="create_Question" value="질문 생성하기" onclick="openModal()">
+									<input type="button" id="create_Question" class="create_Question" value="질문 생성하기" onclick="openModal()">
+									<input type="button" id="seq_btn" class="sequence_change" style="margin-right: 20px;" value="질문 순서 지정" onclick="sequenceChange(this)">
+									
 									<div id="category_header" style="margin-top: 15px; margin-left: 15px;">
 										<input type="button" id="categoryBtn_S" class="categoryBtn" value="안전" onclick="checkSafe()"style="background-color: #F7A4A4;">
 										<input type="button" id="categoryBtn_M" class="categoryBtn" value="마음" onclick="checkMind()" style="background-color: #FEBE8C;">
