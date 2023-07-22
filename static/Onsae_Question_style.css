@@ -39,11 +39,15 @@
 #QuestionList::-webkit-scrollbar {
     display: none;
 }
-.Question_Style {
+.Question_Style { /*순서 변경 이벤트 추가*/
     border: 1px solid gray; 
     height: auto; 
     margin-bottom: 15px; 
     padding: 8px;
+    transition: background-color 1s ease;
+}
+.Question_Style.clicked {
+    background-color: rgba(36, 159, 216, 0.5);
 }
 .category_Icon {
     display: inline-block;

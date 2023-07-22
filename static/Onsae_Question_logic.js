@@ -9,6 +9,12 @@ Request_API("S");
 Request_API("H");
 Request_API("M");
 
+var DL_sequence = [];
+var S_sequence = [];
+var H_sequence = [];
+var M_sequence = [];
+
+
 
 async function Request_API(category){//Request_API("DL");
 // 모든 질문 불러오기 (관리자 웹용) <- 삭제로 죽은 질문지까지 모두 불러오는 API:get
@@ -39,28 +45,59 @@ async function Request_API(category){//Request_API("DL");
             Category_DL_Arr = ReturnVal;
             create_QuestionList("DailyLife");
             //checkDaily(true, "DailyLife");
+            exist_sequence(Category_DL_Arr, "DL");
             break;
         case "S":
             Category_S_Arr = ReturnVal;
             create_QuestionList("Safe");
             //checkSafe(true, "Safe");
+            exist_sequence(Category_S_Arr, "S");
             break;
         case "H":
            	Category_H_Arr = ReturnVal;
             create_QuestionList("Health");
             //checkHealth(true, "Health");
+            exist_sequence(Category_H_Arr, "H");
             break;
         case "M":
             Category_M_Arr = ReturnVal;
             create_QuestionList("Mind");
             //checkMind(true, "Mind");
+            exist_sequence(Category_M_Arr, "M");
             break;
         default:
             console.log("Error Code 404");
     }
 }
 
+function exist_sequence(data, category){//기존 질문의 순서를 저장하는 함수
+    let seq_arr = [];
+
+    for(let index=0; index < data.length; index++){
+        seq_arr.push(data[index].code);   
+    }
+    switch(category){
+        case "DL":
+            DL_sequence = seq_arr;
+            break;
+        case "S":
+            S_sequence = seq_arr;
+            break;
+        case "H":
+            H_sequence = seq_arr;
+            break;
+        case "M":
+            M_sequence = seq_arr;
+            break;
+        default:
+            console.log("exist_sequence function is error");
+    }
+    //console.log(seq_arr);
+}
+
+
 var is_modify = "";//만약 수정중이라면 해당 항목에 대해서는 작동x
+
 function show_Answer(div){//질문리스트에서 답변항목 볼수 있게 토글
     //console.log("실행");
     let con = document.getElementById(div);
@@ -140,16 +177,15 @@ function create_QuestionList(category){//create_QuestionList("Safe")
                 upbtn.setAttribute('class', 'upbtn_style sequence_btn');
                 upbtn.setAttribute('src', './img/icons/up_btn.png');
                 upbtn.setAttribute('style', 'display:none;');
+                upbtn.setAttribute('onclick', eval("'prevSeq(event,`" + QuestionList_Arr[i].code + "`)'"));
                 sequence_div.appendChild(upbtn);
-                
                 let downbtn = document.createElement('img');
                 downbtn.setAttribute('class', 'downbtn_style sequence_btn');
                 downbtn.setAttribute('src', './img/icons/down_btn.png');
                 downbtn.setAttribute('style', 'display:none;');
+                downbtn.setAttribute('onclick', eval("'nextSeq(event,`" + QuestionList_Arr[i].code + "`)'"));
                 sequence_div.appendChild(downbtn);
             child.appendChild(sequence_div);
-
-
 
             
         
@@ -276,19 +312,45 @@ function create_QuestionList(category){//create_QuestionList("Safe")
     is_Empty();
 }
 
-function divChangeTest(){//질문 순서 변경 테스트
-    let container = document.getElementById('daily_box');
-    let boxes = container.getElementsByClassName('daily');
-    let boxArray = Array.from(boxes);
-    
-    let temp = boxArray[0];
-    boxArray[0] = boxArray[1];
-    boxArray[1] = temp;
+function nextSeq(event, div_id){//질문 순서 변경 테스트
+    event.stopPropagation();
+    let this_elem = document.getElementById(div_id);
+    let next_elem = this_elem.nextElementSibling;
 
-    for (let i = 0; i < boxArray.length; i++) {
-        container.appendChild(boxArray[i]);
-    }   
+    if(next_elem == null){
+        alert("마지막 입니다!");
+    } else {
+        next_elem.insertAdjacentElement('afterend', this_elem);
+        //alert("변경되었습니다!");
+        changeBackgroundColor(this_elem, next_elem);
+    }
 }
+
+function prevSeq(event, div_id){
+    event.stopPropagation();
+    let this_elem = document.getElementById(div_id);
+    let prev_elem = this_elem.previousElementSibling;
+    if(prev_elem == null){
+        alert("첫번째 입니다!");
+    } else {
+        prev_elem.insertAdjacentElement('beforebegin', this_elem);
+        //alert("변경되었습니다!");
+        changeBackgroundColor(this_elem, prev_elem);
+    }
+}
+
+function changeBackgroundColor(elem1, elem2) {
+    elem1.classList.add('clicked');
+    //elem2.classList.add('clicked');
+
+    setTimeout(() => {
+        elem1.classList.remove('clicked');
+        //elem2.classList.remove('clicked');
+    }, 1000);
+}
+  
+
+
 
 function sequenceChange(btn){//질문 순서 변경 모드 버튼
     let cate_daily = document.getElementById('daily_box');
@@ -296,7 +358,7 @@ function sequenceChange(btn){//질문 순서 변경 모드 버튼
     let cate_mind = document.getElementById('mind_box');
     let cate_safe = document.getElementById('safe_box');
 
-    let style_on = 'border: 6px solid skyblue;border-radius: 5px; margin-bottom: 10px;';
+    let style_on = 'border: 6px solid #3c4e57;border-radius: 5px; margin-bottom: 10px; padding: 10px 10px 0px 10px';
     let style_off = '';
     let mode = document.getElementById("seq_btn").className;
     
@@ -331,11 +393,75 @@ function sequenceChange(btn){//질문 순서 변경 모드 버튼
         btn.value = "순서 변경 지정";
         seq_cancel.value = "질문 생성하기";
         seq_cancel.setAttribute('onclick', 'openModal()');
+        isSeqchange();
     }
     
     seq_cancel.classList.toggle('active');
     btn.classList.toggle('active');
 }
+
+function isSeqchange(){//순서변경 완료 후 기존 순서에서 변경되었는지 확인
+    let D_elem = document.getElementById('daily_box');
+    let Dchild = D_elem.children;
+    let Dseq = Array.from(Dchild).map(div => div.id);
+
+    let H_elem = document.getElementById('health_box');
+    let Hchild = H_elem.children;
+    let Hseq = Array.from(Hchild).map(div => div.id);
+
+    let S_elem = document.getElementById('safe_box');
+    let Schild = S_elem.children;
+    let Sseq = Array.from(Schild).map(div => div.id);
+
+    let M_elem = document.getElementById('mind_box');
+    let Mchild = M_elem.children;
+    let Mseq = Array.from(Mchild).map(div => div.id);
+
+    let is_change = false;
+
+    if(JSON.stringify(DL_sequence) != JSON.stringify(Dseq)){
+        updateSeq(Dseq);
+        console.log("일상 순서 바뀜");//순서 변경 api만 적용하면 됨
+        is_change = true;
+    }
+    if(JSON.stringify(H_sequence) != JSON.stringify(Hseq)){
+        updateSeq(Hseq);
+        console.log("건강 순서 바뀜");
+        is_change = true;
+    }
+    if(JSON.stringify(S_sequence) != JSON.stringify(Sseq)){
+        updateSeq(Sseq);
+        console.log("안전 순서 바뀜");
+        is_change = true;
+    }
+    if(JSON.stringify(M_sequence) != JSON.stringify(Mseq)){
+        updateSeq(Mseq);
+        console.log("마음 순서 바뀜");
+        is_change = true;
+    }
+
+    if(is_change){
+        alert("적용되었습니다!");
+        location.reload();
+    }
+}
+
+//async function updateSeq(seq_data){
+function updateSeq(seq_data){
+    console.log("등록함" + seq_data);
+    // await axios.post("http://apionsaemiro.site/api/",{
+    //     code: seq_data
+    // }).then((response) => {
+    //     if (response) {
+    //     console.log(response.data);
+    // }
+    // })
+    // .catch((error) => {
+    //     console.log(error);
+    
+    // });
+}
+
 
 function sequenceCancel(){//질문 순서 변경 취소
     console.log("취소되었습니다");
